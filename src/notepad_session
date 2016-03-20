@@ -1,0 +1,18 @@
+<NotepadPlus>
+    <Session activeView="0">
+        <mainView activeIndex="2">
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1477" startPos="679" endPos="679" selMode="0" lang="Caml" encoding="-1" filename="C:\Users\spano\Documents\SVN\spano\Polygen\src\absyn.ml" backupFilePath="" originalFileLastModifTimestamp="1444126061" />
+            <File firstVisibleLine="48" xOffset="0" scrollWidth="1477" startPos="291" endPos="291" selMode="0" lang="Caml" encoding="-1" filename="C:\Users\spano\Documents\SVN\spano\Polygen\src\pre.ml" backupFilePath="" originalFileLastModifTimestamp="1444126584" />
+            <File firstVisibleLine="162" xOffset="0" scrollWidth="1477" startPos="6208" endPos="6208" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\spano\Documents\SVN\spano\Polygen\src\parser.mly" backupFilePath="" originalFileLastModifTimestamp="1444127220" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1477" startPos="0" endPos="0" selMode="0" lang="Caml" encoding="-1" filename="C:\Users\spano\Documents\SVN\spano\Polygen\src\prelude.ml" backupFilePath="" originalFileLastModifTimestamp="1376052906" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1477" startPos="0" endPos="0" selMode="0" lang="Caml" encoding="-1" filename="C:\Users\spano\Documents\SVN\spano\Polygen\src\fake.ml" backupFilePath="" originalFileLastModifTimestamp="1376052906" />
+            <File firstVisibleLine="21" xOffset="0" scrollWidth="1477" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\spano\Documents\SVN\spano\Polygen\src\lexer.mll" backupFilePath="" originalFileLastModifTimestamp="1444125267" />
+            <File firstVisibleLine="339" xOffset="0" scrollWidth="1477" startPos="10540" endPos="10540" selMode="0" lang="Caml" encoding="-1" filename="C:\Users\spano\Documents\SVN\spano\Polygen\src\check.ml" backupFilePath="C:\Users\spano\AppData\Roaming\Notepad++\backup\check.ml@2015-10-06_122510" originalFileLastModifTimestamp="1444127104" />
+            <File firstVisibleLine="42" xOffset="0" scrollWidth="1477" startPos="2142" endPos="2142" selMode="0" lang="Caml" encoding="-1" filename="C:\Users\spano\Documents\SVN\spano\Polygen\src\main.ml" backupFilePath="" originalFileLastModifTimestamp="1444126836" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1477" startPos="38" endPos="38" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\spano\Documents\SVN\spano\Polygen\src\test.grm" backupFilePath="" originalFileLastModifTimestamp="1444126781" />
+            <File firstVisibleLine="40" xOffset="0" scrollWidth="1477" startPos="449" endPos="449" selMode="0" lang="Caml" encoding="-1" filename="C:\Users\spano\Documents\SVN\spano\Polygen\src\io.ml" backupFilePath="" originalFileLastModifTimestamp="1376052906" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1477" startPos="334" endPos="334" selMode="0" lang="Makefile" encoding="-1" filename="C:\Users\spano\Documents\SVN\spano\Polygen\src\makefile" backupFilePath="" originalFileLastModifTimestamp="1444124077" />
+        </mainView>
+        <subView activeIndex="0" />
+    </Session>
+</NotepadPlus>

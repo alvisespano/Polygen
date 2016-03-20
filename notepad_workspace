@@ -1,0 +1,22 @@
+<NotepadPlus>
+    <Project name="Polygen">
+        <File name="src\absyn.ml" />
+        <File name="src\check.ml" />
+        <File name="src\env.ml" />
+        <File name="src\err.ml" />
+        <File name="src\fake.ml" />
+        <File name="src\gen.ml" />
+        <File name="src\io.ml" />
+        <File name="src\load.ml" />
+        <File name="src\main.ml" />
+        <File name="src\pre.ml" />
+        <File name="src\prelude.ml" />
+        <File name="src\ver.ml" />
+        <File name="src\load.mli" />
+        <File name="src\lexer.mll" />
+        <File name="src\parser.mly" />
+        <File name="src\makefile" />
+        <File name="src\test.grm" />
+        <File name="src\test_lib.grm" />
+    </Project>
+</NotepadPlus>

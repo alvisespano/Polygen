@@ -1,0 +1,29 @@
+ver.cmo :
+ver.cmx :
+prelude.cmo :
+prelude.cmx :
+err.cmo :
+err.cmx :
+absyn.cmo : prelude.cmx err.cmx
+absyn.cmx : prelude.cmx err.cmx
+env.cmo : prelude.cmx absyn.cmx
+env.cmx : prelude.cmx absyn.cmx
+check.cmo : prelude.cmx err.cmx env.cmx absyn.cmx
+check.cmx : prelude.cmx err.cmx env.cmx absyn.cmx
+pre.cmo : prelude.cmx env.cmx absyn.cmx
+pre.cmx : prelude.cmx env.cmx absyn.cmx
+gen.cmo : prelude.cmx err.cmx env.cmx absyn.cmx
+gen.cmx : prelude.cmx err.cmx env.cmx absyn.cmx
+fake.cmo : absyn.cmx
+fake.cmx : absyn.cmx
+parser.cmo : prelude.cmx fake.cmx err.cmx absyn.cmx parser.cmi
+parser.cmx : prelude.cmx fake.cmx err.cmx absyn.cmx parser.cmi
+lexer.cmo : parser.cmi err.cmx
+lexer.cmx : parser.cmx err.cmx
+io.cmo : ver.cmx prelude.cmx parser.cmi lexer.cmx fake.cmx err.cmx absyn.cmx
+io.cmx : ver.cmx prelude.cmx parser.cmx lexer.cmx fake.cmx err.cmx absyn.cmx
+main.cmo : ver.cmx prelude.cmx pre.cmx parser.cmi lexer.cmx io.cmx gen.cmx \
+    err.cmx check.cmx absyn.cmx
+main.cmx : ver.cmx prelude.cmx pre.cmx parser.cmx lexer.cmx io.cmx gen.cmx \
+    err.cmx check.cmx absyn.cmx
+parser.cmi : absyn.cmx
