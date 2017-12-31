@@ -20,6 +20,11 @@
 #                    Text Files (EOL Normalization Settings)                    
 # ------------------------------------------------------------------------------
 
+## ================
+## Polygen Grammars
+## ================
+*.grm          text
+
 ## ==========================
 ## OCaml source/project files
 ## ==========================
@@ -68,6 +73,12 @@ makefile       text
 #                                  Binary Files                                 
 # ------------------------------------------------------------------------------
 # Explicitly declare all files that are binary and shouldn't be modified by Git:
+
+## =========================
+## Polygen Compiled Grammars
+## =========================
+*.grm.o        text
+
 
 ## ================
 ## Windows Binaries

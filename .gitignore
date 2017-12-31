@@ -1,4 +1,8 @@
 
+## =========================
+## Polygen Compiled Grammars
+## =========================
+*.grm.o
 
 ## ================
 ## Windows Binaries
