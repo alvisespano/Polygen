@@ -47,10 +47,11 @@
 ## ===================
 ## Documentation files
 ## ===================
-*md            text
+*.md           text
 Changes        text
 Credits        text
 License        text
+LICENSE        text
 README*        text
 VERSION        text
 
@@ -77,7 +78,7 @@ makefile       text
 ## =========================
 ## Polygen Compiled Grammars
 ## =========================
-*.grm.o        text
+*.grm.o      binary
 
 
 ## ================
