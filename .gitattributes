@@ -16,12 +16,12 @@
 *.rtf    diff=astextplain
 *.RTF    diff=astextplain
 
-# ------------------------------------------------------------------------------
+# ==============================================================================
 #                    Text Files (EOL Normalization Settings)                    
-# ------------------------------------------------------------------------------
+# ==============================================================================
 
 ## ================
-## Polygen Grammars
+## PolyGen Grammars
 ## ================
 *.grm          text
 
@@ -61,6 +61,7 @@ VERSION        text
 .gitattributes text
 .gitconfig     text
 .gitignore     text
+.gitmodules    text
 
 ## ================
 ## Make files
@@ -70,13 +71,13 @@ VERSION        text
 Makefile       text
 makefile       text
 
-# ------------------------------------------------------------------------------
+# ==============================================================================
 #                                  Binary Files                                 
-# ------------------------------------------------------------------------------
+# ==============================================================================
 # Explicitly declare all files that are binary and shouldn't be modified by Git:
 
 ## =========================
-## Polygen Compiled Grammars
+## PolyGen Compiled Grammars
 ## =========================
 *.grm.o      binary
 
@@ -97,3 +98,17 @@ makefile       text
 *.cmxa       binary
 *.cmxs       binary
 *.o          binary
+
+# ==============================================================================
+#                                GitHub Linguist                                
+# ==============================================================================
+#  -- https://github.com/github/linguist
+#
+# Manually define/override some extension so that GitHub's Linguist library can
+# 1) Correctly gather statistics on source files, and
+# 2) Use proper syntax highlighting on GitHub's WebUI.
+
+## ============================
+## PolyGen Grammars (sources)
+## ============================
+*.grm    linguist-language=EBNF
