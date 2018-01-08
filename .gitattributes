@@ -5,13 +5,110 @@
 *.cs     diff=csharp
 
 # Standard to msysgit
-*.doc	 diff=astextplain
-*.DOC	 diff=astextplain
-*.docx diff=astextplain
-*.DOCX diff=astextplain
-*.dot  diff=astextplain
-*.DOT  diff=astextplain
-*.pdf  diff=astextplain
-*.PDF	 diff=astextplain
-*.rtf	 diff=astextplain
-*.RTF	 diff=astextplain
+*.doc    diff=astextplain
+*.DOC    diff=astextplain
+*.docx   diff=astextplain
+*.DOCX   diff=astextplain
+*.dot    diff=astextplain
+*.DOT    diff=astextplain
+*.pdf    diff=astextplain
+*.PDF    diff=astextplain
+*.rtf    diff=astextplain
+*.RTF    diff=astextplain
+
+# ==============================================================================
+#                    Text Files (EOL Normalization Settings)                    
+# ==============================================================================
+
+## ================
+## PolyGen Grammars
+## ================
+*.grm          text
+
+## ==========================
+## OCaml source/project files
+## ==========================
+*.annot        text
+*.ml           text
+*.ml.template  text
+*.mli          text
+*.mll          text
+*.mly          text
+*.output       text
+.depend        text
+
+## ================
+## Shell scripts
+## ================
+*.bat          text eol=crlf
+*.com          text eol=crlf
+*.sh           text eol=lf
+
+## ===================
+## Documentation files
+## ===================
+*.md           text
+Changes        text
+Credits        text
+License        text
+LICENSE        text
+README*        text
+VERSION        text
+
+## ================
+## Git settings
+## ================
+.gitattributes text
+.gitconfig     text
+.gitignore     text
+.gitmodules    text
+
+## ================
+## Make files
+## ================
+*.Debug        text
+*.Release      text
+Makefile       text
+makefile       text
+
+# ==============================================================================
+#                                  Binary Files                                 
+# ==============================================================================
+# Explicitly declare all files that are binary and shouldn't be modified by Git:
+
+## =========================
+## PolyGen Compiled Grammars
+## =========================
+*.grm.o      binary
+
+
+## ================
+## Windows Binaries
+## ================
+*.exe        binary
+
+## ================
+## OCaml Obj Files
+## ================
+*.a          binary
+*.cma        binary
+*.cmi        binary
+*.cmo        binary
+*.cmx        binary
+*.cmxa       binary
+*.cmxs       binary
+*.o          binary
+
+# ==============================================================================
+#                                GitHub Linguist                                
+# ==============================================================================
+#  -- https://github.com/github/linguist
+#
+# Manually define/override some extension so that GitHub's Linguist library can
+# 1) Correctly gather statistics on source files, and
+# 2) Use proper syntax highlighting on GitHub's WebUI.
+
+## ============================
+## PolyGen Grammars (sources)
+## ============================
+*.grm    linguist-language=EBNF

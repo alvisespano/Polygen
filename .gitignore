@@ -1,0 +1,45 @@
+
+## =========================
+## Polygen Compiled Grammars
+## =========================
+*.grm.o
+
+## ================
+## Windows Binaries
+## ================
+*.exe
+
+## ==============================
+## Third Party Tools Config Files
+## ==============================
+notepad_session
+notepad_workspace
+
+# ------------------------------------------------------------------------------
+#                             OCaml Files Exclusion                             
+# ------------------------------------------------------------------------------
+# Created by https://www.gitignore.io/api/ocaml
+
+### OCaml ###
+*.annot
+*.cmo
+*.cma
+*.cmi
+*.a
+*.o
+*.cmx
+*.cmxs
+*.cmxa
+
+# ocamlbuild working directory
+_build/
+
+# ocamlbuild targets
+*.byte
+*.native
+
+# oasis generated files
+setup.data
+setup.log
+
+# End of https://www.gitignore.io/api/ocaml
