@@ -476,7 +476,8 @@ and __ocaml_lex_quote_rec lexbuf __ocaml_lex_state =
                      ( raise (Failure ("illegal character '" ^ (String.escaped (Lexing.lexeme lexbuf)) ^ "' within quote")) )
 # 478 "lexer.ml"
 
-  | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; __ocaml_lex_quote_rec lexbuf __ocaml_lex_state
+  | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; 
+      __ocaml_lex_quote_rec lexbuf __ocaml_lex_state
 
 and comment lexbuf =
     __ocaml_lex_comment_rec lexbuf 14
@@ -485,24 +486,25 @@ and __ocaml_lex_comment_rec lexbuf __ocaml_lex_state =
       | 0 ->
 # 35 "lexer.mll"
                     ( token lexbuf )
-# 489 "lexer.ml"
+# 490 "lexer.ml"
 
   | 1 ->
 # 36 "lexer.mll"
                     ( comment lexbuf )
-# 494 "lexer.ml"
+# 495 "lexer.ml"
 
   | 2 ->
 # 38 "lexer.mll"
                    ( Err.next_line lexbuf; comment lexbuf )
-# 499 "lexer.ml"
+# 500 "lexer.ml"
 
   | 3 ->
 # 39 "lexer.mll"
                     ( comment lexbuf )
-# 504 "lexer.ml"
+# 505 "lexer.ml"
 
-  | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; __ocaml_lex_comment_rec lexbuf __ocaml_lex_state
+  | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; 
+      __ocaml_lex_comment_rec lexbuf __ocaml_lex_state
 
 and token lexbuf =
     __ocaml_lex_token_rec lexbuf 22
@@ -511,184 +513,185 @@ and __ocaml_lex_token_rec lexbuf __ocaml_lex_state =
       | 0 ->
 # 42 "lexer.mll"
                     ( token lexbuf )
-# 515 "lexer.ml"
+# 517 "lexer.ml"
 
   | 1 ->
 # 43 "lexer.mll"
                     ( comment lexbuf )
-# 520 "lexer.ml"
+# 522 "lexer.ml"
 
   | 2 ->
 # 46 "lexer.mll"
                    ( Err.next_line lexbuf; token lexbuf )
-# 525 "lexer.ml"
+# 527 "lexer.ml"
 
   | 3 ->
 # 48 "lexer.mll"
                     ( EOL )
-# 530 "lexer.ml"
+# 532 "lexer.ml"
 
   | 4 ->
 # 49 "lexer.mll"
                     ( COLON )
-# 535 "lexer.ml"
+# 537 "lexer.ml"
 
   | 5 ->
 # 50 "lexer.mll"
                     ( BRA )
-# 540 "lexer.ml"
+# 542 "lexer.ml"
 
   | 6 ->
 # 51 "lexer.mll"
                     ( KET )
-# 545 "lexer.ml"
+# 547 "lexer.ml"
 
   | 7 ->
 # 52 "lexer.mll"
                     ( SQBRA )
-# 550 "lexer.ml"
+# 552 "lexer.ml"
 
   | 8 ->
 # 53 "lexer.mll"
                     ( SQKET )
-# 555 "lexer.ml"
+# 557 "lexer.ml"
 
   | 9 ->
 # 54 "lexer.mll"
                     ( DEF )
-# 560 "lexer.ml"
+# 562 "lexer.ml"
 
   | 10 ->
 # 55 "lexer.mll"
                     ( ASSIGN )
-# 565 "lexer.ml"
+# 567 "lexer.ml"
 
   | 11 ->
 # 56 "lexer.mll"
                     ( PIPE )
-# 570 "lexer.ml"
+# 572 "lexer.ml"
 
   | 12 ->
 # 57 "lexer.mll"
                     ( GT )
-# 575 "lexer.ml"
+# 577 "lexer.ml"
 
   | 13 ->
 # 58 "lexer.mll"
                     ( GTGT )
-# 580 "lexer.ml"
+# 582 "lexer.ml"
 
   | 14 ->
 # 59 "lexer.mll"
                     ( LT )
-# 585 "lexer.ml"
+# 587 "lexer.ml"
 
   | 15 ->
 # 60 "lexer.mll"
                     ( LTLT )
-# 590 "lexer.ml"
+# 592 "lexer.ml"
 
   | 16 ->
 # 61 "lexer.mll"
                     ( CBRA )
-# 595 "lexer.ml"
+# 597 "lexer.ml"
 
   | 17 ->
 # 62 "lexer.mll"
                     ( CKET )
-# 600 "lexer.ml"
+# 602 "lexer.ml"
 
   | 18 ->
 # 63 "lexer.mll"
            ( STAR )
-# 605 "lexer.ml"
+# 607 "lexer.ml"
 
   | 19 ->
 # 64 "lexer.mll"
                     ( PLUS )
-# 610 "lexer.ml"
+# 612 "lexer.ml"
 
   | 20 ->
 # 65 "lexer.mll"
                     ( MINUS )
-# 615 "lexer.ml"
+# 617 "lexer.ml"
 
   | 21 ->
 # 66 "lexer.mll"
                     ( CAP )
-# 620 "lexer.ml"
+# 622 "lexer.ml"
 
   | 22 ->
 # 67 "lexer.mll"
                     ( UNDERSCORE )
-# 625 "lexer.ml"
+# 627 "lexer.ml"
 
   | 23 ->
 # 68 "lexer.mll"
                     ( DOT )
-# 630 "lexer.ml"
+# 632 "lexer.ml"
 
   | 24 ->
 # 69 "lexer.mll"
            ( COMMA )
-# 635 "lexer.ml"
+# 637 "lexer.ml"
 
   | 25 ->
 # 70 "lexer.mll"
                     ( DOTBRA )
-# 640 "lexer.ml"
+# 642 "lexer.ml"
 
   | 26 ->
 # 71 "lexer.mll"
                     ( QUOTE (quote lexbuf) )
-# 645 "lexer.ml"
+# 647 "lexer.ml"
 
   | 27 ->
 # 72 "lexer.mll"
                     ( BACKSLASH )
-# 650 "lexer.ml"
+# 652 "lexer.ml"
 
   | 28 ->
 # 73 "lexer.mll"
                     ( IMPORT )
-# 655 "lexer.ml"
+# 657 "lexer.ml"
 
   | 29 ->
 # 74 "lexer.mll"
                     ( AS )
-# 660 "lexer.ml"
+# 662 "lexer.ml"
 
   | 30 ->
 # 75 "lexer.mll"
                     ( SLASH )
-# 665 "lexer.ml"
+# 667 "lexer.ml"
 
   | 31 ->
 # 77 "lexer.mll"
                                                             ( TERM (Lexing.lexeme lexbuf) )
-# 670 "lexer.ml"
+# 672 "lexer.ml"
 
   | 32 ->
 # 78 "lexer.mll"
                                                 ( NONTERM (Lexing.lexeme lexbuf) )
-# 675 "lexer.ml"
+# 677 "lexer.ml"
 
   | 33 ->
 # 79 "lexer.mll"
                                                ( let s = Lexing.lexeme lexbuf in DOTLABEL (String.sub s 1 (String.length s - 1)) )
-# 680 "lexer.ml"
+# 682 "lexer.ml"
 
   | 34 ->
 # 81 "lexer.mll"
                     ( EOF )
-# 685 "lexer.ml"
+# 687 "lexer.ml"
 
   | 35 ->
 # 83 "lexer.mll"
                ( raise (Failure ("illegal character '" ^ (String.escaped (Lexing.lexeme lexbuf)) ^ "'")) )
-# 690 "lexer.ml"
+# 692 "lexer.ml"
 
-  | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; __ocaml_lex_token_rec lexbuf __ocaml_lex_state
+  | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; 
+      __ocaml_lex_token_rec lexbuf __ocaml_lex_state
 
 ;;
 

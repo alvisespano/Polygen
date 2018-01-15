@@ -5,14 +5,11 @@ PolyGen: Credits
 PolyGen is a Spinning Kids production released in 2002-03 under the GNU General Public License (GPL).
 See License file for details.
 
+concept and programming         Alvise Spano'
+polygen.org site         		Enrico Zeffiro
+documentation                   Alvise Spano'
 
-concept and programming         Manta
+Thanks to Tristano Ajmone for the updates to the english manual and for keeping it aligned.
+Individual grammar authors are credited within the information section of each grammar source file.
 
-polygen.org development         Zeff
-
-polygen.org design              Vision-X.it
-
-documentation                   Manta
-
-debian packaging                Filippo Giunchedi
 

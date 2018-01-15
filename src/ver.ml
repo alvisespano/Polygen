@@ -7,4 +7,4 @@
 
 
 let ver = "1.7.0"
-let date = "20151007"
+let date = "20180115"
