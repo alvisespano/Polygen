@@ -1,0 +1,9 @@
+
+I ::= test library
+;
+
+S ::= blam A
+;
+
+A ::= blum
+;
