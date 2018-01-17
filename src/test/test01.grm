@@ -7,5 +7,5 @@ I ::= test
 S ::= U
 ;
 
-U ::= spano'
+U ::= spano' 
 ;
