@@ -26,11 +26,11 @@ Polygen — a first effort towards satyre in computer science
 
 # 1.0 Prelude
 
-Polygen is a program for generating random sentences according to a grammar definition, that is following custom syntactical and lexical rules. It takes a text file as source program defining a grammar by means of BNF-like rules and executes it, eventually showing the result.
+Polygen is a command line program for generating random sentences according to a grammar definition, that is following custom syntactical and lexical rules. It takes a text file as source program defining a grammar by means of BNF-like rules and executes it, eventually showing the result.
 
 Here a source program is a grammar definition, the execution consists in the exploration of such grammar by selecting a random path and the result is the sentence built on the way.
 
-
+![PolyGUIScreenshot][PolyGUI screenshot]
 
 # 1.1 Package
 
@@ -62,8 +62,7 @@ Refer to platform-dependant `README` file for additional hints.
 
 In the root of this project you'll find a Zip archive containing the precompiled binaries of Polygen and PolyGUI, along with the correct version of `cygwin1.dll` required for running Polygen under Windows 10:
 
-- [`Polygen1.6.0-PolyGUI_Win10.zip`](./Polygen1.6.0-PolyGUI_Win10.zip
-)
+- [`Polygen1.6.0-PolyGUI_Win10.zip`][Polygen Win Zip] (direct download link)
 
 Just unpack its contents and you're ready to use it.
 
@@ -82,3 +81,6 @@ Refer to the tutorial hypertext file for a detailed guide to the grammar definit
 - Remember to provide an "`I`" non-terminal symbol in your own grammar files for the `-info` option.
 - Try to avoid as many warnings as possible when developing your own grammar sources: your definitions will be more robust and won't lead to unexpected outputs.
 
+[Polygen Win Zip]: https://github.com/alvisespano/Polygen/raw/master/Polygen1.6.0-PolyGUI_Win10.zip "Download Polygen for Windows and PolyGUI precompiled binaries"
+
+[PolyGUI screenshot]: https://raw.githubusercontent.com/wiki/tajmone/Polygen/screenshot_PolyGUI.png "Screenshot of PolyGUI tool for creating and testing Polygen grammars"
