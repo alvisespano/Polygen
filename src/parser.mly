@@ -2,7 +2,7 @@
  * Polygen
  * parser.mly: parser definition for Yacc
  *
- * Alvise Spano' (2002-03)
+ * (c) 2002, 2003, 2004, 2015 Alvise Spano'
  */
 
 %{
@@ -123,7 +123,10 @@ decls:
 decl:
 	NONTERM DEF prod        { Bind (Def, $1, $3) }
   | NONTERM ASSIGN prod     { Bind (Assign, $1, $3) }
-  | IMPORT file AS NONTERM	{ Import ($4, load_decls $2) }
+  | IMPORT file             { Import (None, load_decls $2) }
+  | IMPORT file AS NONTERM	{ Import (Some $4, load_decls $2) }
+/*| IMPORT file 			{ Import ($2, None) }
+  | IMPORT file AS NONTERM	{ Import ($2, Some $4) }*/
 ;
 
 op:
@@ -194,15 +197,26 @@ unfoldable:
                                 Sub (Std, decls, (deep_unfold_prod p)) }
 ;
 
-/* the following replication is needed for making Yacc lookahead */
+/* the following replication is needed for making Yacc perform look-ahead! */
 sub:
-	prod							 { ([], $1) }
-  |	NONTERM DEF prod EOL prod    	 { ([(Bind (Def, $1, $3), localizes 1 3)], $5) }
-  | NONTERM DEF prod EOL sub    	 { add_decl (Bind (Def, $1, $3), localizes 1 3) $5 }
-  |	NONTERM ASSIGN prod EOL prod   	 { ([(Bind (Assign, $1, $3), localizes 1 3)], $5) }
-  | NONTERM ASSIGN prod EOL sub   	 { add_decl (Bind (Assign, $1, $3), localizes 1 3) $5 }
-  | IMPORT file AS NONTERM EOL prod  { ([(Import ($4, load_decls $2), localizes 1 4)], $6) }
-  | IMPORT file AS NONTERM EOL sub   { add_decl (Import ($4, load_decls $2), localizes 1 4) $6 }
+	prod								{ ([], $1) }
+  |	NONTERM DEF prod EOL prod    		{ ([(Bind (Def, $1, $3), localizes 1 3)], $5) }
+  | NONTERM DEF prod EOL sub    		{ add_decl (Bind (Def, $1, $3), localizes 1 3) $5 }
+  |	NONTERM ASSIGN prod EOL prod   		{ ([(Bind (Assign, $1, $3), localizes 1 3)], $5) }
+  | NONTERM ASSIGN prod EOL sub			{ add_decl (Bind (Assign, $1, $3), localizes 1 3) $5 }
+
+  /* new productions for import, based on simple AST and deferred loading of grammars */
+/*| IMPORT file EOL prod  				{ ([(Import ($2, None), localizes 1 2)], $4) }
+  | IMPORT file EOL sub   				{ add_decl (Import ($2, None), localizes 1 2) $4 }
+  | IMPORT file AS NONTERM EOL prod  	{ ([(Import ($2, Some $4), localizes 1 4)], $6) }
+  | IMPORT file AS NONTERM EOL sub   	{ add_decl (Import ($2, Some $4), localizes 1 4) $6 }*/
+
+  /* old productions for import, based on loading grammars at parse-time */
+  | IMPORT file EOL prod  				{ ([(Import (None, load_decls $2), localizes 1 2)], $4) }
+  | IMPORT file EOL sub   				{ add_decl (Import (None, load_decls $2), localizes 1 2) $4 }
+  | IMPORT file AS NONTERM EOL prod 	{ ([(Import (Some $4, load_decls $2), localizes 1 4)], $6) }
+  | IMPORT file AS NONTERM EOL sub  	{ add_decl (Import (Some $4, load_decls $2), localizes 1 4) $6 }
+  
 ;
 
 atoms:

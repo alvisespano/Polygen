@@ -18,6 +18,8 @@ let pretty_path (Path (ps, sym)) =
         [] -> sym
       | _  -> (flatten_strings "/" ps) ^ "/" ^ sym
 
+let append_path sym' (Path (syms, sym)) = Path (syms @ [sym], sym')
+	  
 
 module Absyn0 =
   struct
@@ -48,7 +50,9 @@ module Absyn0 =
     and prod' = Prod of seq list
 
     and decl' = Bind of bind_mode * symbol * prod
-              | Import of symbol * decl list
+              (*| Import of string * symbol option*)
+			  | Import of symbol option * decl list
+			  
 
     and atom = atom' * Err.loc
 
@@ -57,7 +61,6 @@ module Absyn0 =
     and prod = prod' * Err.loc
 
     and decl = decl' * Err.loc
-
 
   end
 

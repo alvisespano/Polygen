@@ -6,5 +6,5 @@
  *)
 
 
-let ver = "1.0.6a"
+let ver = "1.1.0"
 let date = "20180122"

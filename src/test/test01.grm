@@ -1,0 +1,11 @@
+
+import "test_lib.grm" as Lib;
+
+I ::= test
+;
+
+S ::= U
+;
+
+U ::= spano' 
+;

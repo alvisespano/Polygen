@@ -1,5 +1,5 @@
 
-Polygen: build instructions
+PolyGen: build instructions
 ---------------------------
 
 
@@ -21,7 +21,7 @@ Index
 1.0 Requirements
 ----------------
 
-Polygen is written in Objective Caml, a highly efficient dialect of the functional language ML - a serious language with a serious paradigm for serious programmers.
+PolyGen is written in Objective Caml, a highly efficient dialect of the functional language ML - a serious language with a serious paradigm for serious programmers.
 Thus, in order to compile it by yourself, you need the following:
 
  - OCaml bytecode (ocamlc) or native code (ocamlopt) compiler
@@ -38,7 +38,7 @@ The GNU make is recommended in order to let the makefile do all the building job
 -----------------
 
 OCaml is a platform-independent language, since its standard library abstracts from the underlying operating system.
-Polygen uses just few I/O functions, all the rest being pure owner code: it is therefore 100% portable to any platform supported by an (even poor) OCaml implementation.
+PolyGen uses just few I/O functions, all the rest being pure owner code: it is therefore 100% portable to any platform supported by an (even poor) OCaml implementation.
 
 
 
