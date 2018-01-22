@@ -21,7 +21,7 @@
 # ==============================================================================
 
 ## ================
-## PolyGen Grammars
+## Polygen Grammars
 ## ================
 *.grm          text
 
@@ -77,7 +77,7 @@ makefile       text
 # Explicitly declare all files that are binary and shouldn't be modified by Git:
 
 ## =========================
-## PolyGen Compiled Grammars
+## Polygen Compiled Grammars
 ## =========================
 *.grm.o      binary
 
@@ -109,6 +109,6 @@ makefile       text
 # 2) Use proper syntax highlighting on GitHub's WebUI.
 
 ## ============================
-## PolyGen Grammars (sources)
+## Polygen Grammars (sources)
 ## ============================
 *.grm    linguist-language=EBNF

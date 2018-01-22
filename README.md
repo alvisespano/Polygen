@@ -26,17 +26,17 @@ Polygen — a first effort towards satyre in computer science
 
 # 1.0 Prelude
 
-PolyGen is a program for generating random sentences according to a grammar definition, that is following custom syntactical and lexical rules. It takes a text file as source program defining a grammar by means of BNF-like rules and executes it, eventually showing the result.
+Polygen is a command line program for generating random sentences according to a grammar definition, that is following custom syntactical and lexical rules. It takes a text file as source program defining a grammar by means of BNF-like rules and executes it, eventually showing the result.
 
 Here a source program is a grammar definition, the execution consists in the exploration of such grammar by selecting a random path and the result is the sentence built on the way.
 
-
+![PolyGUIScreenshot][PolyGUI screenshot]
 
 # 1.1 Package
 
 ## 1.1.1 Requirements
 
-PolyGen is fairly slim and does not need that powerful computer in order to work.
+Polygen is fairly slim and does not need that powerful computer in order to work.
 
 From a theoretical point of view, there could be unlucky cases making the program loop for a sensible amount of time over a certain recursive production; in the real world, though, it will never happen.
 
@@ -45,14 +45,14 @@ Everything you need is a shell or command line interpreter (such as Bash or Csh 
 
 ## 1.1.2 Supported platforms
 
-PolyGen packages come in a variety of flavours, some providing different executable files in a platform-dependent way. Be sure the one you downloaded suits your machine and operating system.
+Polygen packages come in a variety of flavours, some providing different executable files in a platform-dependent way. Be sure the one you downloaded suits your machine and operating system.
 
-A package containing the full source code exists as well and is intended for either people who just wish to know how PolyGen works or users whose platform is not directly supported by a package containing an executable file for their machine. The latter will be able to compile the program by themselves following the instructions in the README file located in the source directory.
+A package containing the full source code exists as well and is intended for either people who just wish to know how Polygen works or users whose platform is not directly supported by a package containing an executable file for their machine. The latter will be able to compile the program by themselves following the instructions in the README file located in the source directory.
 
 
 ## 1.1.3 Installation
 
-PolyGen needs no installation: it just consists of an executable file and a bunch of grammar sources.
+Polygen needs no installation: it just consists of an executable file and a bunch of grammar sources.
 
 Leave it as is in an own directory and '`cd`' there when you want to use it.
 
@@ -60,10 +60,9 @@ Refer to platform-dependant `README` file for additional hints.
 
 ### 1.1.3.1 Windows Precompiled Binaries
 
-In the root of this project you'll find a Zip archive containing the precompiled binaries of PolyGen and PolyGUI, along with the correct version of `cygwin1.dll` required for running PolyGen under Windows 10:
+In the root of this project you'll find a Zip archive containing the precompiled binaries of Polygen and PolyGUI, along with the correct version of `cygwin1.dll` required for running Polygen under Windows 10:
 
-- [`PolyGen1.6.0-PolyGUI_Win10.zip`](./PolyGen1.6.0-PolyGUI_Win10.zip
-)
+- [`Polygen1.6.0-PolyGUI_Win10.zip`][Polygen Win Zip] (direct download link)
 
 Just unpack its contents and you're ready to use it.
 
@@ -74,7 +73,7 @@ The executable file must be launched from a shell or command line interpreter, a
 
 ## 1.2.1 Defining grammars
 
-Refer to the tutorial hypertext file for a detailed guide to the grammar definition language interpreted by PolyGen.
+Refer to the tutorial hypertext file for a detailed guide to the grammar definition language interpreted by Polygen.
 
 
 ## 1.2.2 Suggestions
@@ -82,3 +81,6 @@ Refer to the tutorial hypertext file for a detailed guide to the grammar definit
 - Remember to provide an "`I`" non-terminal symbol in your own grammar files for the `-info` option.
 - Try to avoid as many warnings as possible when developing your own grammar sources: your definitions will be more robust and won't lead to unexpected outputs.
 
+[Polygen Win Zip]: https://github.com/alvisespano/Polygen/raw/master/Polygen1.6.0-PolyGUI_Win10.zip "Download Polygen for Windows and PolyGUI precompiled binaries"
+
+[PolyGUI screenshot]: https://raw.githubusercontent.com/wiki/tajmone/Polygen/screenshot_PolyGUI.png "Screenshot of PolyGUI tool for creating and testing Polygen grammars"
