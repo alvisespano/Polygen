@@ -74,9 +74,10 @@ and token = parse
   | "as"            { AS }
   | '/'             { SLASH }
 
-  | ['a'-'z' '0'-'9' '\''] ['a'-'z' 'A'-'Z' '0'-'9' '\'']* 	{ TERM (Lexing.lexeme lexbuf) }
-  | ['A'-'Z'] ['a'-'z' 'A'-'Z' '0'-'9']*				   	{ NONTERM (Lexing.lexeme lexbuf) }
-  | '.' ['a'-'z' 'A'-'Z' '0'-'9']+				        	{ let s = Lexing.lexeme lexbuf in DOTLABEL (String.sub s 1 (String.length s - 1)) }
+  | ['a'-'z' '0'-'9' '\''] ['a'-'z' 'A'-'Z' '0'-'9' '\'']* { TERM (Lexing.lexeme lexbuf) }
+  | ['A'-'Z'] ['a'-'z' 'A'-'Z' '0'-'9']*					 { NONTERM (Lexing.lexeme lexbuf) }
+  | '.' ['a'-'z' 'A'-'Z' '0'-'9']+				             { let s = Lexing.lexeme lexbuf in
+                                                                    DOTLABEL (String.sub s 1 (String.length s - 1)) }
 
   | eof             { EOF }
 

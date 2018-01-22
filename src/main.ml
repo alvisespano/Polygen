@@ -47,7 +47,7 @@ let specl = [("-eof", Arg.String (fun s -> eof := let lexbuf = Lexing.from_strin
                    "    alias for '-S I'");
 
              ("-l", Arg.String (fun s -> lbs := LabelSet.add s !lbs),
-                "LABEL  add LABEL to global label environment");
+                "LABEL  add LABEL to initial active label environment");
 
              ("-o", Arg.String (fun s -> dest := try open_out s with Sys_error _ ->
                                                  	io_error ("cannot open file '" ^ s ^ "' for output")),
@@ -78,8 +78,8 @@ let specl = [("-eof", Arg.String (fun s -> eof := let lexbuf = Lexing.from_strin
                 "N      set warning pedantry at level N (default: N = 1)");
              ]
 
-let usage = (sprintf "Polygen v%s built %s - http://www.polygen.org\n" Ver.ver Ver.date)
-          ^ "(c) 2002, 2003, 2004, 20015 Alvise Spano'\n\n"
+let usage = (sprintf "Polygen (type 2) v%s build %s - http://www.polygen.org\n" Ver.ver Ver.date)
+          ^ "Manta/Spinning Kids alias Alvise Spano' anno MMII ac insequenti fecit.\n\n"
           ^ "usage: polygen [OPTION]... SOURCES...\n\n"
           ^ " SOURCE     source file(s) providing grammar definition\n\n"
           ^ " OPTION"
@@ -163,5 +163,5 @@ try
     iter main !sources;
     close_out !dest
 with Unexpected s ->
-    eprintf "unexpected exception caught: %s\n* Please send a bug report to the author at spano.alvise@gmail.com" s
+    eprintf "Unexpected termination: %s\n* Please send a bug report to the author at manta@polygen.org" s
 

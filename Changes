@@ -1,8 +1,9 @@
-PolyGen - What's new?
----------------------
+Polygen: Change Log
+-------------------
 
-* 6/9/2015
-  - source code readapted to new OCaml compiler after more than 11 years
+* 22/01/2018:
+  - makefile and building procedure readapted to new OCaml compiler after many years
+  - version bump 1.0.6a
 
 * 28/6/2004
   - official release 1.0.6 (formers were 1.0 pre-releases)

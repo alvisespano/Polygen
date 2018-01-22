@@ -72,9 +72,9 @@ let warning lv loc s = uwarning lv (localized_prompt s loc)
 
 let info (file, _, _, _, _) s = printf "%s: %s\n" file s 
 
-(*let merror loc s ss =
-	error loc s;
-	iter (fun s -> eprintf "       %s\n" s) ss*)
+let merror loc s ss =
+	ignore (error loc s);
+	iter (fun s -> eprintf "       %s\n" s) ss
 
 let mwarning lv loc s ss =
 	warning lv loc s;

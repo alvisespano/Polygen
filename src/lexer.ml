@@ -667,28 +667,29 @@ and __ocaml_lex_token_rec lexbuf __ocaml_lex_state =
 
   | 31 ->
 # 77 "lexer.mll"
-                                                            ( TERM (Lexing.lexeme lexbuf) )
+                                                           ( TERM (Lexing.lexeme lexbuf) )
 # 672 "lexer.ml"
 
   | 32 ->
 # 78 "lexer.mll"
-                                                ( NONTERM (Lexing.lexeme lexbuf) )
+                                              ( NONTERM (Lexing.lexeme lexbuf) )
 # 677 "lexer.ml"
 
   | 33 ->
 # 79 "lexer.mll"
-                                               ( let s = Lexing.lexeme lexbuf in DOTLABEL (String.sub s 1 (String.length s - 1)) )
-# 682 "lexer.ml"
+                                                   ( let s = Lexing.lexeme lexbuf in
+                                                                    DOTLABEL (String.sub s 1 (String.length s - 1)) )
+# 683 "lexer.ml"
 
   | 34 ->
-# 81 "lexer.mll"
+# 82 "lexer.mll"
                     ( EOF )
-# 687 "lexer.ml"
+# 688 "lexer.ml"
 
   | 35 ->
-# 83 "lexer.mll"
+# 84 "lexer.mll"
                ( raise (Failure ("illegal character '" ^ (String.escaped (Lexing.lexeme lexbuf)) ^ "'")) )
-# 692 "lexer.ml"
+# 693 "lexer.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; 
       __ocaml_lex_token_rec lexbuf __ocaml_lex_state

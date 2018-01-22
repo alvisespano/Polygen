@@ -1,5 +1,5 @@
 
-PolyGen — a first effort towards satyre in computer science
+Polygen — a first effort towards satyre in computer science
 
 
 

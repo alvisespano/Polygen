@@ -65,13 +65,13 @@ module Pre =
 
     (*type bound = RecClosure of bound Env.t * (symbol * A.prod) list*)
 
-    let pre =
+    let pre decls =
 
     	let rec declare env decls =
             let f (decl, _) =
     			match decl with
     				A.Bind (_, sym, p) -> (sym, p)
-                 |  A.Import (sym, decls)		   -> raise (Unexpected "pre.ml: declare: import not supported")
+                 |  A.Import _		   -> raise (Unexpected "import not supported")
             (*in
             let rc = RecClosure (env, map f decls) in
             let f (decl, _) =
@@ -148,12 +148,12 @@ module Pre =
         		match decl with
         			A.Bind (A.Def, sym, p)    -> B.Bind (B.Def, sym, pre_prod env p)
                  |  A.Bind (A.Assign, sym, p) -> B.Bind (B.Assign, sym, pre_prod env p)
-                 |  A.Import _                -> raise (Unexpected "pre.ml: pre_decl: import not supported")
+                 |  A.Import _                -> raise (Unexpected "pre.ml: pre_decl")
     		in
         		map f decls
 
        	in
-       		fun decls -> pre_decls (declare Env.empty decls) decls
+       		pre_decls (declare Env.empty decls) decls
 
   end
 

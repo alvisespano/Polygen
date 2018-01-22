@@ -1,17 +1,17 @@
 #
-# Polygen
+# PolyGen
 # src-level makefile
 #
-# (c) 2002, 2003, 2004, 2015 Alvise Spano'
+# (C) 2002-2018 Alvise Spano'
 #
 
-NAME       := polygen
+NAME        = polygen
 
-VERSION    := $(shell cat <VERSION)
-DATE       := $(shell date +%Y%m%d)
+VERSION     = $(shell cat <VERSION)
+DATE        = $(shell cat <DATE)
 
 MLDEP	    = ocamldep -native
-MLC 		= ocamlopt.opt
+MLC 		= ocamlopt
 MLCOPTS		= -inline 23 -unsafe
 MLLDOPTS	= unix.cmxa
 MLLEX		= ocamllex
@@ -32,8 +32,12 @@ OBJS	   := ver.cmx		        \
               main.cmx
 SRCS       := $(OBJS:.cmx=.ml)
 
+.PHONY: all clean distclean
 
-all: $(NAME)
+all: DATE $(NAME)
+
+DATE:
+	date +'%Y%m%d' >DATE
 
 $(NAME): $(OBJS)
 	$(MLC) $(MLLDOPTS) $(OBJS) -o $@
@@ -49,7 +53,7 @@ parser.mli parser.ml lexer.ml: lexer.mll parser.mly
 	$(MLYACC) parser.mly
     # workaround for ocamlyacc "open" lack
 	@mv parser.mli _parser.mli
-	@echo -e "open Absyn\n" >parser.mli
+	@echo "open Absyn\n" >parser.mli
 	@cat <_parser.mli >>parser.mli
 	@rm -f _parser.mli
 
@@ -62,9 +66,11 @@ clean:
 
 distclean: clean
 	rm -f $(NAME) $(NAME).exe
+	rm -f DATE
 
 .depend: parser.mli
 	$(MLDEP) $(SRCS) parser.mli >.depend
 
-include .depend
 
+include .depend
+# DO NOT DELETE

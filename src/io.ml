@@ -92,7 +92,8 @@ let load_decls file =
           |  Parsing.Parse_error ->
                 let s = String.escaped (Lexing.lexeme lexbuf)
                 in
-                    syntax_error file lexbuf ("syntax error when parsing " ^ (if s = "" then "empty token" else "token \"" ^ s ^ "\""))
+                    syntax_error file lexbuf ("unexpected " ^ (if s = "" then "empty token"
+                      else "token \"" ^ s ^ "\""))
 
     with Sys_error s -> io_error ("cannot parse from file \"" ^ s ^ "\"")
 
