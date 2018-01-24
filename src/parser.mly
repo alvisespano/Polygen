@@ -1,11 +1,12 @@
-/*
+%{
+
+(*
  * Polygen
  * parser.mly: parser definition for Yacc
  *
- * (c) 2002, 2003, 2004, 2015 Alvise Spano'
- */
+ * (C) 2002-2018 Alvise Spano'
+ *)
 
-%{
 open Absyn
 open Absyn.Absyn0
 open List
@@ -97,7 +98,7 @@ and deep_unfold_prod (Prod seqs, loc) = (Prod (map deep_unfold_seq seqs), loc)
        COLON CAP UNDERSCORE DOTBRA BACKSLASH LTLT LT IMPORT AS SLASH STAR
 
 %start source
-%type <Absyn0.decl list> source
+%type <Absyn.Absyn0.decl list> source
 %start quote
 %type <string> quote
 

@@ -2,7 +2,7 @@
  * Polygen
  * check.ml: grammar checker
  *
- * (c) 2002, 2003, 2004, 2015 Alvise Spano'
+ * (C) 2002-2018 Alvise Spano'
  *)
 
 open List
@@ -68,7 +68,7 @@ module Check =
     type uid = path * int
 
     let counter = ref 0
-    let fresh sym = (Path ([], sym), (incr counter; !counter))
+    let fresh sym = Path ([], sym), (incr counter; !counter)
 
 
     (* branch and circuits *)
@@ -190,14 +190,6 @@ module Check =
      * checkers
      *)
 
-        (*let rec declare env prefixes decls =
-            let f env (decl, _) =
-                match decl with
-                    A.Bind (_, sym, p)      -> Env.bind env (Path (prefixes, sym)) p
-                  | A.Import (symo, decls') -> declare env (prefixes @ (match symo with None -> [] | Some sym -> [sym])) decls'
-            in
-                fold_left f env decls*)
-
     (* basic checker:
      *   existence of non-terminals
      *   useless permutations
@@ -263,10 +255,10 @@ module Check =
 
     let check_unfolding =
 
-        let rec declare env ctx decls =
-            let f (decl, _) =
+        let rec declare env decls =
+            let f decl =
                 match decl with
-                    A.Bind (m, sym, p)      -> sym, (fresh sym, m, p)
+                    A.Bind (m, sym, p)      -> sym, (fresh sym, m, p)   (* TODO: il tipo-valore dell'env non è questa tupla ma una tripla. Forse è meglio fare un record *)
                   | A.Import (symo, decls') -> declare env decls 
             in
                 Env.binds env (map f decls)

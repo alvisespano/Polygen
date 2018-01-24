@@ -34,7 +34,6 @@ module Absyn0 =
       | Unfold of unfoldable
       | Lock of unfoldable
 
-
     and terminal =
         Epsilon
       | Concat
@@ -53,13 +52,9 @@ module Absyn0 =
               (*| Import of string * symbol option*)
 			  | Import of symbol option * decl list
 			  
-
     and atom = atom' * Err.loc
-
     and seq = seq' * Err.loc
-
     and prod = prod' * Err.loc
-
     and decl = decl' * Err.loc
 
   end
