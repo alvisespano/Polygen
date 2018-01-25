@@ -79,7 +79,7 @@ let specl = [("-eof", Arg.String (fun s -> eof := let lexbuf = Lexing.from_strin
              ]
 
 let usage = (sprintf "Polygen v%s built %s - http://www.polygen.org\n" Ver.ver Ver.date)
-          ^ "(c) 2002, 2003, 2004, 20015 Alvise Spano'\n\n"
+          ^ "(c) 2002-2018 Alvise Spano'\n\n"
           ^ "usage: polygen [OPTION]... SOURCES...\n\n"
           ^ " SOURCE     source file(s) providing grammar definition\n\n"
           ^ " OPTION"
