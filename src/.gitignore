@@ -6,4 +6,7 @@ parser.mli
 parser.output
 ver.ml
 .depend
+polygen
+polygen.exe
+
 
