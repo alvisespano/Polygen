@@ -43,3 +43,9 @@ setup.data
 setup.log
 
 # End of https://www.gitignore.io/api/ocaml
+src/lexer.ml
+src/parser.ml
+src/parser.mli
+src/polygen
+src/ver.ml
+src/.depend
