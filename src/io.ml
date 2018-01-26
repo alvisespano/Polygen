@@ -41,11 +41,10 @@ let load_obj source =
             	else ()
         in
     	let ic = open_in_bin file in
-    	let obj = (Marshal.from_channel ic : 'a obj) in
-    	let _ = check_obj obj;
-    			close_in ic
-    	in
-        	obj.data
+    	let obj = (Marshal.from_channel ic : _ obj) in
+        check_obj obj;
+ 	    close_in ic;
+      	obj.data
 
     with Unix.Unix_error (e, _, _) ->
     	 io_error ("cannot read file: " ^ (Unix.error_message e))

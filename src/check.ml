@@ -13,6 +13,7 @@ open Absyn
 open Env
 open Err
 
+(* TODO: remove outer modules *)
 module Check =
   struct
 
@@ -21,7 +22,7 @@ module Check =
     (* global settings *)
 
     let do_report_groups = ref false
-
+    let unsupported_import () = raise (Unexpected ("import not supported yet"))
 
     (* LabelSet with loc *)
 
@@ -68,7 +69,7 @@ module Check =
     type uid = path * int
 
     let counter = ref 0
-    let fresh sym = Path ([], sym), (incr counter; !counter)
+    let fresh_uid_of_symbol sym = Path ([], sym), (incr counter; !counter)
 
 
     (* branch and circuits *)
@@ -253,26 +254,29 @@ module Check =
      *   useless unfoldings
      *)
 
+    type envv = { uid : uid; mode : A.bind_mode; prod : A.prod }
+    type env = envv Env.t
+
     let check_unfolding =
 
-        let rec declare env decls =
-            let f decl =
+        let rec declare env0 decls =
+            let f env (decl, _) =
                 match decl with
-                    A.Bind (m, sym, p)      -> sym, (fresh sym, m, p)   (* TODO: il tipo-valore dell'env non è questa tupla ma una tripla. Forse è meglio fare un record *)
-                  | A.Import (symo, decls') -> declare env decls 
+                | A.Bind (m, sym, p)      -> Env.bind env (Path ([], sym)) { uid = fresh_uid_of_symbol sym; mode = m; prod = p }
+                | A.Import (symo, decls') -> declare env decls'
             in
-                Env.binds env (map f decls)
+                List.fold_left f env0 decls
         in
 
         let rec check_decls env uids decls =
             let f (decl, _) =
                 match decl with
-                    A.Bind (_, sym, p) -> 
-                        let (uid, _, _) = Env.lookup env (Path ([], sym))
-                        in
-                            check_prod env (uid :: uids) p
+                | A.Bind (_, sym, p) -> 
+                    let { uid = uid } = Env.lookup env (Path ([], sym))
+                    in
+                        check_prod env (uid :: uids) p
                             
-                  | A.Import _         -> raise (Unexpected ("import not supported yet"))
+                | A.Import _ -> unsupported_import ()
             in
                 iter f decls
 
@@ -284,32 +288,32 @@ module Check =
             let _ = check_useless_unfoldings (a, loc)
             in
             match a with
-                A.Terminal _ -> ()
+            | A.Terminal _ -> ()
 
-              | A.Sel (a, _) -> check_atom env uids a
+            | A.Sel (a, _) -> check_atom env uids a
 
-              | A.Lock (A.NonTerm _)
-              | A.Fold (A.NonTerm _) -> ()
+            | A.Lock (A.NonTerm _)
+            | A.Fold (A.NonTerm _) -> ()
 
-              | A.Unfold (A.NonTerm path) ->
-                    let (uid, m, p) = Env.lookup env path
-                    in
-                    let _ = match m with
-                                A.Assign -> warning 2 loc (sprintf "unfolding of assignment-bound symbol '%s'" (pretty_path path))
-                              | _        -> ()
-                    in
-                        if occurs uids uid then
-                            error loc (sprintf "cyclic unfolding of symbol '%s'" (pretty_path path))
-                        else
-                            check_prod env (uid :: uids) p
+            | A.Unfold (A.NonTerm path) ->
+                let { uid = uid; mode = m; prod = p } = Env.lookup env path
+                in
+                let _ = match m with
+                            A.Assign -> warning 2 loc (sprintf "unfolding of assignment-bound symbol '%s'" (pretty_path path))
+                            | _        -> ()
+                in
+                    if occurs uids uid then
+                        error loc (sprintf "cyclic unfolding of symbol '%s'" (pretty_path path))
+                    else
+                        check_prod env (uid :: uids) p
 
-              | A.Lock (A.Sub (_, decls, p))
-              | A.Fold (A.Sub (_, decls, p))
-              | A.Unfold (A.Sub (_, decls, p)) ->
-                    let env' = declare env decls in
-                    let _ = check_decls env' uids decls
-                    in
-                        check_prod env' uids p
+            | A.Lock (A.Sub (_, decls, p))
+            | A.Fold (A.Sub (_, decls, p))
+            | A.Unfold (A.Sub (_, decls, p)) ->
+                let env' = declare env decls in
+                let _ = check_decls env' uids decls
+                in
+                    check_prod env' uids p
 
         in
             fun decls -> check_decls (declare Env.empty decls) [] decls
@@ -359,7 +363,7 @@ module Check =
             let _ = check_redefinition decls in
             let f (decl, _) =
                 match decl with
-                    A.Bind (_, sym, p) -> (sym, (fresh sym, p))
+                    A.Bind (_, sym, p) -> (sym, (fresh_uid_of_symbol sym, p))
                 |   A.Import _         -> raise (Unexpected "import not supported yet")
             in
                 Env.bind env (map f decls)
@@ -417,7 +421,7 @@ module Check =
               | A.Lock (A.Sub (_, decls, p))
               | A.Fold (A.Sub (_, decls, p))
               | A.Unfold (A.Sub (_, decls, p)) ->
-                    let r' = {r with env = declare r.env decls} in
+                    let r' = { r with env = declare r.env decls } in
                     let _ = check_nested_decls r' decls
                     in
                         check_prod r' p
@@ -438,10 +442,10 @@ module Check =
                           in
                               fold_left f LabelSet.empty seqs
                 in
-                    if let f = function (A.Seq (None, _), _)   -> true
-                                    |   (A.Seq (Some _, _), _) -> false
-                       in
-                           exists f seqs
+                    if (let f = function (A.Seq (None, _), _)   -> true
+                                     |   (A.Seq (Some _, _), _) -> false
+                        in
+                           exists f seqs)
                     then Open lbs
                     else Closed lbs
             in
