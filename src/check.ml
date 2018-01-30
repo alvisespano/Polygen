@@ -363,7 +363,7 @@ module Check =
             let _ = check_redefinition decls in
             let f (decl, _) =
                 match decl with
-                    A.Bind (_, sym, p) -> (sym, (fresh_uid_of_symbol sym, p))
+                    A.Bind (_, sym, p) -> sym, (fresh_uid_of_symbol sym, p)
                 |   A.Import _         -> raise (Unexpected "import not supported yet")
             in
                 Env.bind env (map f decls)
@@ -378,7 +378,7 @@ module Check =
                                                     report_termination sym t
                   | A.Bind (A.Def, _, _)      -> ()
                 (*| A.Import (file, Some x)   -> *)
-                  | A.Import (_, decls')      -> check_nested_decls {branches = []; env = Env.empty; lbs = LabelLocSet.empty} decls'
+                  | A.Import (_, decls')      -> check_nested_decls { branches = []; env = Env.empty; lbs = LabelLocSet.empty } decls'
             in
                 iter (f r) decls
 
@@ -437,13 +437,13 @@ module Check =
 
         and check_prod r (A.Prod seqs, loc) =
             let g =
-                let lbs = let f z = function (A.Seq (None, _), _)    -> z
-                                         |   (A.Seq (Some lb, _), _) -> LabelSet.add lb z
+                let lbs = let f z = function A.Seq (None, _), _    -> z
+                                         |   A.Seq (Some lb, _), _ -> LabelSet.add lb z
                           in
                               fold_left f LabelSet.empty seqs
                 in
-                    if (let f = function (A.Seq (None, _), _)   -> true
-                                     |   (A.Seq (Some _, _), _) -> false
+                    if (let f = function A.Seq (None, _), _   -> true
+                                     |   A.Seq (Some _, _), _ -> false
                         in
                            exists f seqs)
                     then Open lbs
@@ -489,8 +489,8 @@ module Check =
 
         and branch_ (r, loc, uid, p) =
             match tail_segment (Branch.(=) (uid, r.lbs)) r.branches with
-                []       -> check_prod {r with branches = (uid, r.lbs) :: r.branches} p
-              | branches -> (GroupSet.empty, Unterm (loc, branches))
+            | []       -> check_prod {r with branches = (uid, r.lbs) :: r.branches} p
+            | branches -> (GroupSet.empty, Unterm (loc, branches))
 
         in
             let r = { lbs = LabelLocSet.of_labels (LabelSet.elements lbs);
