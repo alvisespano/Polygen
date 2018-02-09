@@ -6,9 +6,6 @@
  *)
 
 open Printf
-open List
-
-open Prelude
 open Prelude
 open Absyn
 open Check
@@ -78,8 +75,8 @@ let specl = [("-eof", Arg.String (fun s -> eof := let lexbuf = Lexing.from_strin
                 "N      set warning pedantry at level N (default: N = 1)");
              ]
 
-let usage = (sprintf "Polygen v%s built %s - http://www.polygen.org\n" Ver.ver Ver.date)
-          ^ "(c) 2002-2018 Alvise Spano'\n\n"
+let usage = (sprintf "Polygen v%s build %s - http://www.polygen.org\n" Ver.ver Ver.date)
+          ^ "(C) 2002-2018 Manta/Spinning Kids aka Alvise Spanò\n\n"
           ^ "usage: polygen [OPTION]... SOURCES...\n\n"
           ^ " SOURCE     source file(s) providing grammar definition\n\n"
           ^ " OPTION"
@@ -154,13 +151,13 @@ let main source =
             	msg "storing compiled grammar...";
             	store_obj source decls
             with Failure s -> msg s
-;;
 
+;;
 
 (* main code *)
 
 try
-    iter main !sources;
+    List.iter main !sources;
     close_out !dest
 with Unexpected s ->
     eprintf "unexpected exception caught: %s\n* Please send a bug report to the author at spano.alvise@gmail.com" s

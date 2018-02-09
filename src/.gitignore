@@ -8,5 +8,7 @@ ver.ml
 .depend
 polygen
 polygen.exe
+src.old/**
+
 
 

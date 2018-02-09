@@ -15,11 +15,8 @@ let make_version _ _ =
                     let compile_time = %S\n"
                    version time
   in
-  Cmd (S [ A "echo"; Quote (Sh cmd); Sh ">"; P "version.ml" ])
+    Cmd (S [ A "echo"; Quote (Sh cmd); Sh ">"; P "version.ml" ])
 
 let () =
-  dispatch begin function
-  | After_rules ->
-      rule "version.ml" ~prod: "version.ml" make_version
-  | _ -> ()
-  end
+  dispatch (function After_rules -> rule "version.ml" ~prod: "version.ml" make_version
+                   | _ -> ())

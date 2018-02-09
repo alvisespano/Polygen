@@ -6,11 +6,7 @@
  *)
 
 open Absyn
-open List
 open Prelude
-open Prelude
-open Env
-open Lazy
 
 module Pre =
   struct
@@ -22,11 +18,11 @@ module Pre =
     let rec comb ll =
         match ll with
             []      -> []
-          | [xs]    -> map (fun x -> [x]) xs
+          | [xs]    -> List.map (fun x -> [x]) xs
           | xs::lls ->
                 let ll' = comb lls
                 in
-                    flatten (map (fun x -> map (fun l -> x::l) ll') xs)
+                    List.flatten (List.map (fun x -> List.map (fun l -> x::l) ll') xs)
 
 
     (* permutator *)
@@ -36,7 +32,7 @@ module Pre =
             []      -> []
           | [x]     -> [[x]]
           | _       -> let perm h x t =
-                           map (fun l -> x::l) (permute (h @ t))
+                           List.map (fun l -> x::l) (permute (h @ t))
                        in
                        let rec expl l h =
                           match l with
@@ -49,12 +45,12 @@ module Pre =
         let rec proj mseq mseq' =
             match mseq with
                 []              -> []
-              | (Former _) :: l -> surely_former (hd mseq') :: (proj l (tl mseq'))
+              | (Former _) :: l -> surely_former (List.hd mseq') :: (proj l (List.tl mseq'))
               | (Latter a) :: l -> a :: (proj l mseq')
         in
-            match permute (filter is_former mseq) with
+            match permute (List.filter is_former mseq) with
                 []     -> [proj mseq []]
-              | mseqs' -> map (proj mseq) mseqs'
+              | mseqs' -> List.map (proj mseq) mseqs'
 
 
     (* preprocessor
@@ -70,8 +66,8 @@ module Pre =
     	let rec declare env decls =
             let f (decl, _) =
     			match decl with
-    				A.Bind (_, sym, p) -> (sym, p)
-                 |  A.Import (sym, decls)		   -> raise (Unexpected "pre.ml: declare: import not supported")
+    			| A.Bind (_, sym, p)    -> Path.of_sym sym, p
+                | A.Import (sym, decls) -> raise (Unexpected "pre.ml: declare: import not supported")
             (*in
             let rc = RecClosure (env, map f decls) in
             let f (decl, _) =
@@ -79,7 +75,7 @@ module Pre =
     				A.Bind (_, sym, _) -> (sym, rc)
                  |  A.Import _		   -> raise (Unexpected "import not supported")*)
             in
-                Env.bind env (map f decls)
+                Env.binds env (List.map f decls)
     		
        	and pre_atom env (a, _) =
     		match a with
@@ -91,10 +87,11 @@ module Pre =
               | A.Sel (a', lbo) ->
                     let f ma =
                         match ma with
-                            Former a -> Former (B.Sel (a, lbo))
-                          | Latter a -> Latter (B.Sel (a, lbo))
+                        | Former a -> Former (B.Sel (a, lbo))
+                        | Latter a -> Latter (B.Sel (a, lbo))
                     in
-                        map f (pre_atom env a') 
+
+                        List.map f (pre_atom env a') 
 
               | A.Lock u
               | A.Fold u ->
@@ -106,8 +103,8 @@ module Pre =
                       		let sub' = B.Sub (pre_decls env' decls, pre_prod env' p)
                       		in
                       			(match m with
-                      				A.Mob -> [Former sub'] 
-                      			  | A.Std -> [Latter sub']))
+                      			| A.Mob -> [Former sub'] 
+                      			| A.Std -> [Latter sub']))
 
               | A.Unfold u ->
                     (match u with
@@ -120,7 +117,7 @@ module Pre =
                             let B.Prod seqs = pre_prod env p*)
                             let B.Prod seqs = pre_prod env (Env.lookup env path)
                             in
-                                map (fun seq -> Latter (B.Sub ([], B.Prod [seq]))) seqs
+                                List.map (fun seq -> Latter (B.Sub ([], B.Prod [seq]))) seqs
 
                       | A.Sub (m, decls, p) ->
                       		let env' = declare env decls in
@@ -128,29 +125,29 @@ module Pre =
                       		let B.Prod seqs = pre_prod env' p
                       		in
                       			(match m with
-                      				A.Mob -> map (fun seq -> Former (sub' seq)) seqs
-    							  | A.Std -> map (fun seq -> Latter (sub' seq)) seqs))
+                      			| A.Mob -> List.map (fun seq -> Former (sub' seq)) seqs
+    							| A.Std -> List.map (fun seq -> Latter (sub' seq)) seqs))
 
 
     	and pre_seq env (A.Seq (lbo, atoms), _) =
-            let mseqs = comb (map (pre_atom env) atoms) in
-            let new_seqs lbo seqs = map (fun seq -> B.Seq (lbo, seq, ref 0)) seqs in
-            let seqs = map (fun mseq -> [B.Sub ([], B.Prod (new_seqs None (arrange mseq)))]) mseqs
+            let mseqs = comb (List.map (pre_atom env) atoms) in
+            let new_seqs lbo seqs = List.map (fun seq -> B.Seq (lbo, seq, ref 0)) seqs in
+            let seqs = List.map (fun mseq -> [B.Sub ([], B.Prod (new_seqs None (arrange mseq)))]) mseqs
             in
 				new_seqs lbo seqs
 
 
-        and pre_prod env (A.Prod seqs, _) = B.Prod (flatten (map (pre_seq env) seqs))
+        and pre_prod env (A.Prod seqs, _) = B.Prod (List.flatten (List.map (pre_seq env) seqs))
 
 
         and pre_decls env decls =
         	let f (decl, _) =
         		match decl with
-        			A.Bind (A.Def, sym, p)    -> B.Bind (B.Def, sym, pre_prod env p)
-                 |  A.Bind (A.Assign, sym, p) -> B.Bind (B.Assign, sym, pre_prod env p)
-                 |  A.Import _                -> raise (Unexpected "pre.ml: pre_decl: import not supported")
+        		| A.Bind (A.Def, sym, p)    -> B.Bind (B.Def, sym, pre_prod env p)
+                | A.Bind (A.Assign, sym, p) -> B.Bind (B.Assign, sym, pre_prod env p)
+                | A.Import _                -> raise (Unexpected "pre.ml: pre_decl: import not supported")
     		in
-        		map f decls
+        		List.map f decls
 
        	in
        		fun decls -> pre_decls (declare Env.empty decls) decls

@@ -9,86 +9,11 @@
 
 open Absyn
 open Absyn.Absyn0
-open List
-open Prelude
 open Prelude
 open Parsing
+open ParserAux
 
 let load_decls = ! Fake.load_decls
-
-
-(* localize *)
-
-let localizes n m = Err.localize (rhs_start n, rhs_end m)
-let localize n = localizes n n
-
-
-(* reserved symbol *)
-
-let reserved_sym = "__R"
-
-
-(* shortcuts and sugars *)
-
-let seq a loc = (Seq (None, [(a, loc)]), loc)
-let sub seqs loc = Sub (Std, [], (Prod seqs, loc))
-let optsub a loc = sub [seq (Terminal Epsilon) loc; seq a loc] loc
-let add_decl d (ds, p) = (d :: ds, p)
-let reserved_nonterm = Fold (NonTerm (Path ([], reserved_sym)))
-
-(* a.(l1|...|ln) ---> (X ::= a; X.l1 | ... | X.ln) *)
-let multisel loc a lbs =
-	let f lb = seq (Sel ((reserved_nonterm, loc), Some lb)) loc in
-	let b = Bind (Def, reserved_sym, (Prod [(Seq (None, [a]), loc)], loc))
-	in
-    	Fold (Sub (Std, [(b, loc)], (Prod (map f lbs), loc)))
-
-let posel loc atomss =
-	let n = fold_left (fun z atoms -> max z (length atoms)) 1 atomss
-	in
-		if n = 1 then map hd atomss
-		else
-			let f n = function
-				[atom] -> atom
-			  | atoms  -> try nth atoms n
-			  			  with _ -> Err.error loc "etherogeneous number of positional atoms in production"
-			in
-			let seqs = tab (fun n -> (Seq (None, map (f n) atomss), loc)) n
-			in
-				[(Fold (Sub (Std, [], (Prod seqs, loc))), loc)]
-
-
-(* plus/minus expander *)
-
-let expand l =
-    let rec make n x = if n = 0 then [] else x :: (make (n-1) x) in
-    let k =
-        let l' = sort (fun (n, _) (n', _) -> compare n n') l
-        in
-            match l' with
-                []          -> raise (Unexpected "parser.mly: expand")
-              | (k, _) :: _ -> k
-    in
-        fold_left (fun z (n, x) -> z @ (make (n-k+1) x)) [] l
-
-
-(* deep unfolder *)
-
-let rec deep_unfold_unfoldable u =
-    match u with
-        NonTerm _          -> u
-      | Sub (sm, decls, p) -> Sub (sm, decls, deep_unfold_prod p)
-
-and deep_unfold_atom (a, loc) =
-    match a with
-        Fold u
-      | Unfold u      -> (Unfold (deep_unfold_unfoldable u), loc)
-      | Sel (a', lbo) -> (Sel (deep_unfold_atom a', lbo), loc)
-      | _             -> (a, loc)
-
-and deep_unfold_seq (Seq (lbo, atoms), loc) = (Seq (lbo, map deep_unfold_atom atoms), loc)
-
-and deep_unfold_prod (Prod seqs, loc) = (Prod (map deep_unfold_seq seqs), loc)
 
 %}
 
@@ -170,7 +95,7 @@ terminal:
 ;
 
 unfoldable:
-    path                    { NonTerm (Path (tl $1, hd $1)) }
+    path                    { NonTerm (Path (List.tl $1, List.hd $1)) }
 
   | BRA sub KET             { let (decls, p) = $2 in
                                 Sub (Std, decls, p) }
