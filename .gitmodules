@@ -1,3 +1,6 @@
 [submodule "grammars"]
 	path = grammars
 	url = https://github.com/tajmone/polygen-grammars
+	fetchrecursesubmodules = true
+	ignore = none
+	update = merge
