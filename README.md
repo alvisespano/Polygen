@@ -1,8 +1,9 @@
 # Polygen
 
+https://github.com/alvisespano/Polygen
+
 Polygen — a first effort towards satyre in computer science.
 
-https://github.com/alvisespano/Polygen
 
 
 
@@ -26,6 +27,21 @@ https://github.com/alvisespano/Polygen
 
 -----
 
+__SUBMODULE NOTE__ — This project contains a submodule (`grammars` folder); don't forget to initialize it (once) after cloning:
+
+    git submodule update --init --recursive
+
+Also, to keep the submodule always up to date with the latest changes, don't forget to use:
+
+    git submodule update 
+
+For more information on Git submodules, see:
+
+- [Pro Git book]
+- [Learn Version Control with Git]
+
+[Pro Git book]: https://git-scm.com/book/en/v2/Git-Tools-Submodules "Pro Git: 7.11 Git Tools - Submodules"
+[Learn Version Control with Git]: https://www.git-tower.com/learn/git/ebook/en/command-line/advanced-topics/submodules#start "Learn Version Control with Git: Submodules"
 
 # 1.0 Prelude
 
