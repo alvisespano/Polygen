@@ -1,5 +1,8 @@
+# Polygen
 
-Polygen — a first effort towards satyre in computer science
+Polygen — a first effort towards satyre in computer science.
+
+https://github.com/alvisespano/Polygen
 
 
 
@@ -73,14 +76,26 @@ The executable file must be launched from a shell or command line interpreter, a
 
 ## 1.2.1 Defining grammars
 
-Refer to the tutorial hypertext file for a detailed guide to the grammar definition language interpreted by Polygen.
+For a detailed guide on Polygen Meta Language (PML), the grammar definition language interpreted by Polygen, see the documentation included in the [`/docs/`][docs] folder:
 
+- [`polygen-spec_EN.html`][PML en] — English ([HTML Preview][PML en HTML Preview])
+- [`polygen-spec_IT.html`][PML it] — Italian ([HTML Preview][PML it HTML Preview])
 
 ## 1.2.2 Suggestions
 
 - Remember to provide an "`I`" non-terminal symbol in your own grammar files for the `-info` option.
 - Try to avoid as many warnings as possible when developing your own grammar sources: your definitions will be more robust and won't lead to unexpected outputs.
 
+
+
 [Polygen Win Zip]: https://github.com/alvisespano/Polygen/raw/master/Polygen1.6.0-PolyGUI_Win10.zip "Download Polygen for Windows and PolyGUI precompiled binaries"
 
 [PolyGUI screenshot]: https://raw.githubusercontent.com/wiki/tajmone/Polygen/screenshot_PolyGUI.png "Screenshot of PolyGUI tool for creating and testing Polygen grammars"
+
+[docs]: ./docs "View the contents of the 'docs' folder"
+
+[PML en]: ./docs/polygen-spec_EN.html "Polygen Meta Language Spec' (English)"
+[PML it]: ./docs/polygen-spec_IT.html "Polygen Meta Language Spec' (Italian)"
+
+[PML en HTML Preview]: http://htmlpreview.github.io/?https://github.com/tajmone/polygen-docs/blob/master/polygen-spec_EN.html "Live HTML preview of latest release of 'Polygen Meta Language Spec' (English)"
+[PML it HTML Preview]: http://htmlpreview.github.io/?https://github.com/tajmone/polygen-docs/blob/master/polygen-spec_IT.html "Live HTML preview of latest release of 'Polygen Meta Language Spec' (Italian)"
