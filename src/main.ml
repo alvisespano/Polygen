@@ -8,11 +8,7 @@
 open Printf
 open Prelude
 open Absyn
-open Check
-open Pre
-open Gen
 open Err
-open Io
 
 
 (* argument parsing *)
@@ -75,8 +71,8 @@ let specl = [("-eof", Arg.String (fun s -> eof := let lexbuf = Lexing.from_strin
                 "N      set warning pedantry at level N (default: N = 1)");
              ]
 
-let usage = (sprintf "Polygen v%s build %s - http://www.polygen.org\n" Ver.ver Ver.date)
-          ^ "(C) 2002-2018 Manta/Spinning Kids aka Alvise Spanò\n\n"
+let usage = (sprintf "Polygen v%s build %s - http://www.polygen.org\n" Version.version Version.compile_time)
+          ^ "(C) 2002-2018 Alvise Spanò a.k.a. Manta/Spinning Kids\n\n"
           ^ "usage: polygen [OPTION]... SOURCES...\n\n"
           ^ " SOURCE     source file(s) providing grammar definition\n\n"
           ^ " OPTION"
@@ -101,7 +97,7 @@ let msg s = if !verbose then (fprintf !dest "* %s\n" s; flush !dest) else ()
 
 let get_decls0 source =
     let decls = msg ("loading source file \"" ^ source ^ "\"...");
-                load_decls source
+                Load.load_decls source
     in
     let _ = msg "checking grammar...";
             Check.check !lbs decls !start
@@ -133,7 +129,7 @@ let main source =
             let decls =
             	try
             		msg "loading compiled grammar...";
-                    load_obj source
+                    Io.load_obj source
               	with Failure s -> msg s; get_decls1 source
 			in
 
@@ -149,7 +145,7 @@ let main source =
             (* store compiled grammar *)
             try
             	msg "storing compiled grammar...";
-            	store_obj source decls
+            	Io.store_obj source decls
             with Failure s -> msg s
 
 ;;

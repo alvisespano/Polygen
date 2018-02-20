@@ -13,7 +13,7 @@ open Prelude
 open Parsing
 open ParserAux
 
-let load_decls = ! Fake.load_decls
+let load_decls = !Fake.load_decls
 
 %}
 

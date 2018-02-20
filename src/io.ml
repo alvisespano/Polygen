@@ -20,7 +20,7 @@ let __obj = ".o"
 
 type 'a obj = { sum : string; data : 'a }
 
-let sum = Ver.ver
+let sum = Version.version
 
 let make_obj data = { sum = sum; data = data }
 
