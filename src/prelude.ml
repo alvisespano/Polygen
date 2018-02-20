@@ -69,6 +69,7 @@ module type CacheKey =
 module Cache : functor (Key : CacheKey) ->
   sig
     type 'v t
+    
     val init : unit -> 'v t
     val load : 'v t -> Key.t -> 'v Lazy.t -> 'v
   end
