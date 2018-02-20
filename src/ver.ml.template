@@ -2,9 +2,9 @@
  * Polygen
  * ver.ml: version
  *
- * Alvise Spano' (2003)
+ * Alvise Spano' (2002-2018)
  *)
 
 
 let ver = "%VERSION%"
-let date = "%DATE%"
+let date = "%DATE%" 

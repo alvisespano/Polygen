@@ -8,7 +8,8 @@ ver.ml
 .depend
 polygen
 polygen.exe
-src.old/**
+node_modules
+
 
 
 

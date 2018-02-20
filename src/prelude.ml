@@ -115,7 +115,7 @@ struct
 
   let of_labels labels = List.fold_left (fun lbs lb -> add lb lbs) empty labels
   let occurs = mem
-    let pretty lbs = "{" ^ (flatten_strings ", " (elements lbs)) ^ "}"
+  let pretty lbs = "{" ^ (flatten_strings ", " (elements lbs)) ^ "}"
 end
 
 (* mapfst & mapsnd *)
