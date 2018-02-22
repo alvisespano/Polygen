@@ -25,7 +25,8 @@ rule quote = parse
                       in
                           c ^ (quote lexbuf) }
 
-  | ['a'-'z' 'A'-'Z' '0'-'9' '!' '£' '$' '%' '&' '/' '(' ')' '=' '?' '^' '\''
+  | ['a'-'z' 'A'-'Z' '0'-'9' '!' '$' '%' '&' '/' '(' ')' '=' '?' '^' '\''
+
      '[' ']' '*' '+' '@' '#' '<' '>' ',' '.' '-' ';' ':' '_' '{' '}' '`' '~'
      '|' ' ']       { let s = Lexing.lexeme lexbuf in s ^ (quote lexbuf) }
 
@@ -80,5 +81,5 @@ and token = parse
 
   | eof             { EOF }
 
-  | _    		    { raise (Failure ("illegal character '" ^ (String.escaped (Lexing.lexeme lexbuf)) ^ "'")) }
+  | _    		        { raise (Failure ("illegal character '" ^ (String.escaped (Lexing.lexeme lexbuf)) ^ "'")) }
 

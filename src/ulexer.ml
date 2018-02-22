@@ -1,3 +1,16 @@
+(*
+ * Polygen
+ * ulexer.ml: unicode lexer
+ *
+ * Alvise Spano' (2018)
+ *)
+
+open Printf
+open Prelude
+open Absyn
+open Err
+
+
 let digit = [%sedlex.regexp? '0'..'9']
 let number = [%sedlex.regexp? Plus digit]
 

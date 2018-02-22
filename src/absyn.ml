@@ -54,7 +54,7 @@ module Absyn0 =
     and prod' = Prod of seq list
 
     and decl' = Bind of bind_mode * symbol * prod
-              | Import of symbol option * decl list
+              | Import of string * symbol option
 			  
     and atom = atom' * Err.loc
     and seq = seq' * Err.loc
