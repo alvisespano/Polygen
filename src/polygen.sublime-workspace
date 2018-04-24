@@ -11,8 +11,16 @@
 			"file": "check.ml",
 			"settings":
 			{
-				"buffer_size": 15970,
+				"buffer_size": 14370,
 				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": ".ocp-indent",
+			"settings":
+			{
+				"buffer_size": 3932,
 				"line_ending": "Unix"
 			}
 		}
@@ -40,12 +48,40 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 0.0,
-		"last_filter": "",
+		"height": 128.0,
+		"last_filter": "Package Control: install",
 		"selected_items":
 		[
+			[
+				"Package Control: install",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: insta",
+				"Package Control: Install Package"
+			],
+			[
+				"ocp-",
+				"ocp-indent: Indent file"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Advanced Install Package"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"make",
+				"Build With: Make"
+			]
 		],
-		"width": 0.0
+		"width": 461.0
 	},
 	"console":
 	{
@@ -69,6 +105,14 @@
 	],
 	"file_history":
 	[
+		"/home/alvise/Documents/Polygen/src/.ocp-indent",
+		"/home/alvise/.config/sublime-text-3/Packages/ocp-indent/OcpIndent.sublime-settings",
+		"/home/alvise/.config/sublime-text-3/Packages/User/OcpIndent.sublime-settings",
+		"/home/alvise/Documents/Polygen/src/absyn.ml",
+		"/home/alvise/.config/sublime-text-3/Packages/Merlin/Merlin.sublime-settings",
+		"/home/alvise/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/home/alvise/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/alvise/Documents/Polygen/src/.merlin"
 	],
 	"find":
 	{
@@ -109,24 +153,24 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
 					"file": "check.ml",
-					"semi_transient": true,
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 15970,
+						"buffer_size": 14370,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1788,
-								1788
+								6277,
+								6277
 							]
 						],
 						"settings":
@@ -136,7 +180,35 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 765.0,
+						"translation.y": 3876.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": ".ocp-indent",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 3932,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								432,
+								432
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -151,7 +223,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 37.0
 	},
 	"layout":
 	{
