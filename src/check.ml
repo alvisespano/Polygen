@@ -68,18 +68,18 @@ let fresh_uid_of_symbol sym = Path.of_sym sym, (incr counter; !counter)
 (* branch and circuits *)
 
 module Branch =
-struct
-  type t = uid * LabelLocSet.t
-  let (=) (uid, lbs) (uid', lbs') = uid = uid' && LabelLocSet.equal lbs lbs'
-end
+  struct
+    type t = uid * LabelLocSet.t
+    let (=) (uid, lbs) (uid', lbs') = uid = uid' && LabelLocSet.equal lbs lbs'
+  end
 
 module BranchCache = Prelude.Cache (Branch)
 
 let pretty_branches bs =
-  let paths = List.map (fun ((path, _), _) -> path) bs in
-  let pathss = List.map Path.pretty ((List.nth paths (List.length paths - 1)) :: paths)
-  in
-  flatten_strings "->" pathss
+    let paths = List.map (fun ((path, _), _) -> path) bs in
+    let pathss = List.map Path.pretty ((List.nth paths (List.length paths - 1)) :: paths)
+    in
+        flatten_strings "->" pathss
 
 
 (* termination magic ring *)
@@ -175,7 +175,7 @@ let check_useless_unfoldings (a, loc) =
         if List.length seqs == 1 then warning 2 loc "useless unfolding"
         else ()
 
-      | _ -> ()
+    | _ -> ()
 
 
 (*
@@ -238,12 +238,12 @@ let check_basic =
             in
                 check_prod env' prefixes p
 
-  in
-  fun decls ->
-    let prefixes = [] in
-    let env0 = declare Env.empty prefixes decls
     in
-    check_decls env0 prefixes decls
+        fun decls ->
+            let prefixes = [] in
+            let env0 = declare Env.empty prefixes decls
+            in
+                check_decls env0 prefixes decls
 
 
 (* unfolding checker:
@@ -298,10 +298,8 @@ let check_unfolding =
             (match m with
             | A.Assign -> warning 2 loc (sprintf "unfolding of assignment-bound symbol '%s'" (Path.pretty path))
             | _        -> ());
-            if occurs uids uid then
-                error loc (sprintf "cyclic unfolding of symbol '%s'" (Path.pretty path))
-            else
-                check_prod env (uid :: uids) p
+            if occurs uids uid then error loc (sprintf "cyclic unfolding of symbol '%s'" (Path.pretty path))
+            else check_prod env (uid :: uids) p
 
         | A.Lock (A.Sub (_, decls, p))
         | A.Fold (A.Sub (_, decls, p))
@@ -322,29 +320,28 @@ let check_unfolding =
 *)
 
 let report_groups (sym, loc) gs =
-  if !do_report_groups then
-    let gs = List.filter (fun (Open lbs | Closed lbs) -> not (LabelSet.is_empty lbs)) (GroupSet.elements gs) in
-    let gs =
-      let f = function Open _ -> true | Closed _ -> false in
-      let (ogs, cgs) = List.partition f gs
-      in
-      cgs @ ogs
-    in
-    let prefix = sym ^ " :: " in
-    let tab = String.make (String.length prefix) ' '
-    in
-    match gs with
-    | []      -> info loc (prefix ^ "?{}")
-    | g :: gs -> minfo loc (prefix ^ (Group.pretty g)) (List.map (fun g -> tab ^ (Group.pretty g)) gs)
-  else ()
+    if !do_report_groups then
+        let gs = List.filter (fun (Open lbs | Closed lbs) -> not (LabelSet.is_empty lbs)) (GroupSet.elements gs) in
+        let gs =
+            let f = function Open _ -> true | Closed _ -> false in
+            let ogs, cgs = List.partition f gs
+            in
+                cgs @ ogs
+        in
+        let prefix = sym ^ " :: " in
+        let tab = String.make (String.length prefix) ' ' in
+        match gs with
+        | []      -> info loc (prefix ^ "?{}")
+        | g :: gs -> minfo loc (prefix ^ (Group.pretty g)) (List.map (fun g -> tab ^ (Group.pretty g)) gs)
+    else ()
 
 let report_termination sym t =
-  match t with
-  | Zero             -> raise (Unexpected ("check.ml: report"))
-  | Unterm (loc, bs) -> error loc (sprintf "cyclic recursion over circuit %s" (pretty_branches bs))
-  | Epsilon loc      -> error loc (sprintf "symbol '%s' always produces nothing" sym)
-  | WeakEpsilon loc  -> warning 1 loc (sprintf "symbol '%s' may produce nothing" sym)
-  | Term             -> ()
+    match t with
+    | Zero             -> raise (Unexpected ("check.ml: report"))
+    | Unterm (loc, bs) -> error loc (sprintf "cyclic recursion over circuit %s" (pretty_branches bs))
+    | Epsilon loc      -> error loc (sprintf "symbol '%s' always produces nothing" sym)
+    | WeakEpsilon loc  -> warning 1 loc (sprintf "symbol '%s' may produce nothing" sym)
+    | Term             -> ()
 
 type args = { lbs      : LabelLocSet.t;
               branches : Branch.t list;
@@ -368,7 +365,7 @@ let check_termination lbs decls start =
     and check_nested_decls args decls =
         let f r (decl, loc) =
             match decl with
-            | A.Bind (A.Assign, sym, _) -> let (_, t) = check_bind r (sym, loc) in report_termination sym t
+            | A.Bind (A.Assign, sym, _) -> let _, t = check_bind r (sym, loc) in report_termination sym t
             | A.Bind (A.Def, _, _)      -> ()
             (*| A.Import (file, Some x)   -> *)
             | A.Import (_, decls')      -> check_nested_decls { branches = []; env = Env.empty; lbs = LabelLocSet.empty } decls'
@@ -377,7 +374,7 @@ let check_termination lbs decls start =
 
     and check_global_decls args decls =
         let report sym loc =
-            let (gs, t) = check_bind args (sym, loc) in
+            let gs, t = check_bind args (sym, loc) in
             report_termination sym t;
             report_groups (sym, loc) gs
         in
@@ -401,7 +398,7 @@ let check_termination lbs decls start =
 
     | A.Sel (a', None)    -> check_atom { args with lbs = LabelLocSet.empty } a'
     | A.Sel (a', Some lb) ->
-        let (gs, t) = check_atom { args with lbs = LabelLocSet.add (lb, Some loc) args.lbs } a' in
+        let gs, t = check_atom { args with lbs = LabelLocSet.add (lb, Some loc) args.lbs } a' in
         let gs' = GroupSet.filter (fun (Closed lbs | Open lbs) -> not (LabelSet.occurs lb lbs)) gs
         in
             gs', t
@@ -419,107 +416,83 @@ let check_termination lbs decls start =
             check_prod r' p
 
 
-  and check_seq args (A.Seq (_, atoms), _) =
-    let f (gs, t) a =
-      let (gs', t') = check_atom args a
-      in
-      (GroupSet.union gs gs', reduce_seq (t, t'))
-    in
-    List.fold_left f (GroupSet.empty, Zero) atoms
-
-
-  and check_prod args (A.Prod seqs, loc) =
-    let g =
-      let lbs =
-        let f z = function A.Seq (None, _), _    -> z
-                         | A.Seq (Some lb, _), _ -> LabelSet.add lb z
-        in
-        List.fold_left f LabelSet.empty seqs
-      in
-      if (let f = function A.Seq (None, _), _   -> true
-                         | A.Seq (Some _, _), _ -> false
-         in
-         List.exists f seqs)
-      then Open lbs
-      else Closed lbs
-    in
-    let (gs, t) =
-      let seqs' =
-        if LabelLocSet.is_empty args.lbs then seqs
-        else
-          let f (A.Seq (lbo, _), _) =
-            match lbo with
-            | None    -> true
-            | Some lb -> LabelLocSet.occurs lb args.lbs
-          in
-          List.filter f seqs
-      in
-      if List.length seqs' = 0 then
-        let ss =
-          let f (lb, loco) =
-            let where = match loco with
-              | Some loc -> localized_msg loc
-              | None     -> "at top level"
+    and check_seq args (A.Seq (_, atoms), _) =
+        let f (gs, t) a =
+            let gs', t') = check_atom args a
             in
-            "'" ^ lb ^ "' activated " ^ where
-          in
-          List.map f (LabelLocSet.elements args.lbs)
+                (GroupSet.union gs gs', reduce_seq (t, t'))
         in
-        mwarning 1 loc "destructive selection" ("due to current label environment:" :: ss);
-        GroupSet.empty, Epsilon loc
-      else
-        let f (gs, t) seq =
-          let (gs', t') = check_seq args seq
-          in
-          (GroupSet.union gs gs', reduce_prod (t, t'))
+            List.fold_left f (GroupSet.empty, Zero) atoms
+
+
+    and check_prod args (A.Prod seqs, loc) =
+        let g =
+            let lbs =
+                    let f z = function A.Seq (None, _), _    -> z
+                                     | A.Seq (Some lb, _), _ -> LabelSet.add lb z
+                    in
+                        List.fold_left f LabelSet.empty seqs
+            in
+                (if (List.exists (function A.Seq (None, _), _ -> true | _ -> false) seqs) then Open else Closed) lbs
         in
-        List.fold_left f (GroupSet.empty, Zero) seqs'
+            let gs, t =
+                let seqs' =
+                    if LabelLocSet.is_empty args.lbs then seqs
+                    else
+                        let f (A.Seq (lbo, _), _) =
+                            match lbo with
+                            | None    -> true
+                            | Some lb -> LabelLocSet.occurs lb args.lbs
+                        in
+                            List.filter f seqs
+                in
+                    if List.length seqs' = 0 then
+                        let ss =
+                            let f (lb, loco) = "'" ^ lb ^ "' activated " ^ (match loco with Some loc -> localized_msg loc | None -> "at top level")
+                            in
+                                List.map f (LabelLocSet.elements args.lbs)
+                        in
+                            mwarning 1 loc "destructive selection" ("due to current label environment:" :: ss);
+                            GroupSet.empty, Epsilon loc
+                    else
+                        let f (gs, t) seq =
+                            let gs', t' = check_seq args seq
+                            in
+                                GroupSet.union gs gs', reduce_prod (t, t')
+                        in
+                            List.fold_left f (GroupSet.empty, Zero) seqs'
+                    in
+                        GroupSet.add g gs, t
+
+
+    and branch (args, loc, path) =
+        let uid, p = Env.lookup args.env path
+        in
+            BranchCache.load cache (uid, args.lbs) (lazy (branch_ (args, loc, uid, p)))
+
+    and branch_ (args, loc, uid, p) =
+        match tail_segment (Branch.(=) (uid, args.lbs)) args.branches with
+        | []       -> check_prod {args with branches = (uid, args.lbs) :: args.branches} p
+        | branches -> (GroupSet.empty, Unterm (loc, branches))
+
+  
     in
-    (GroupSet.add g gs, t)
-
-
-  and branch (args, loc, path) =
-    let (uid, p) = Env.lookup args.env path
-    in
-    BranchCache.load cache (uid, args.lbs) (lazy (branch_ (args, loc, uid, p)))
-
-  and branch_ (args, loc, uid, p) =
-    match tail_segment (Branch.(=) (uid, args.lbs)) args.branches with
-    | []       -> check_prod {args with branches = (uid, args.lbs) :: args.branches} p
-    | branches -> (GroupSet.empty, Unterm (loc, branches))
-
-  in
-  let r = { lbs = LabelLocSet.of_labels (LabelSet.elements lbs);
-            branches = [];
-            env = declare Env.empty decls }
-  in
-  check_global_decls r decls
-
-(* cos'è sto vecchio commento? *)
-(*let (_, loc) = find (function (A.Bind (_, sym, _), _) -> sym = start | _ -> false) decls
-  in*)
-
-(*let (gs, t) = check_bind r (start, loc)
-  in
-    report_termination start t;
-    report_groups (start, loc) gs*)
-
-
-
+        let r = { lbs = LabelLocSet.of_labels (LabelSet.elements lbs);
+                  branches = [];
+                  env = declare Env.empty decls }
+        in
+            check_global_decls r decls
 
 
 (* whole checker *)
 
 let check lbs decls start =
-  (* (try ignore (find (function (A.Bind (_, sym, _), _) -> sym = "I" | _ -> false) decls)
-     with Not_found -> uwarning 1 "undefined symbol 'I': option -info won't work");
-     (try ignore (find (function (A.Bind (_, sym, _), _) -> sym = start | _ -> false) decls)
-     with Not_found -> uerror (sprintf "undefined start symbol '%s'" start)); *)
-  let check_start_nonterm sym what descr =
-    try ignore (List.find (function (A.Bind (_, sym', _), _) -> sym = sym' | _ -> false) decls)
-    with Not_found -> uwarning 1 (sprintf "undefined %s symbol %s: %s" what sym descr) in
-  check_start_nonterm start "start" "grammar does not have a default entry point";
-  check_start_nonterm "I" "info" "option -info will not work";
-  check_basic decls;
-  check_unfolding decls;
-  (*check_termination lbs decls start;*)
+    let check_start_nonterm sym what descr =
+        try ignore (List.find (function (A.Bind (_, sym', _), _) -> sym = sym' | _ -> false) decls)
+        with Not_found -> uwarning 1 (sprintf "undefined %s symbol %s: %s" what sym descr)
+    in
+    check_start_nonterm start "start" "grammar does not have a default entry point";
+    check_start_nonterm "I" "info" "option -info will not work";
+    check_basic decls;
+    check_unfolding decls;
+    (*check_termination lbs decls start;*)
