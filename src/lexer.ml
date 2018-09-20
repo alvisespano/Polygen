@@ -5,7 +5,7 @@ open Parser
 
 # 7 "lexer.ml"
 let __ocaml_lex_tables = {
-  Lexing.lex_base = 
+  Lexing.lex_base =
    "\000\000\246\255\247\255\093\000\255\255\080\000\249\255\250\255\
     \251\255\252\255\253\255\254\255\103\000\248\255\152\000\252\255\
     \000\000\253\255\096\000\098\000\255\255\254\255\192\000\220\255\
@@ -15,7 +15,7 @@ let __ocaml_lex_tables = {
     \252\255\001\000\253\255\124\000\255\255\254\255\245\255\107\000\
     \246\255\242\255\240\255\198\002\230\255\026\003\110\003\194\003\
     \022\004\106\004\190\004";
-  Lexing.lex_backtrk = 
+  Lexing.lex_backtrk =
    "\255\255\255\255\255\255\009\000\255\255\255\255\255\255\255\255\
     \255\255\255\255\255\255\255\255\255\255\255\255\255\255\255\255\
     \003\000\255\255\003\000\003\000\255\255\255\255\255\255\255\255\
@@ -25,7 +25,7 @@ let __ocaml_lex_tables = {
     \255\255\035\000\255\255\005\000\255\255\255\255\255\255\255\255\
     \255\255\255\255\255\255\033\000\255\255\031\000\031\000\031\000\
     \031\000\028\000\029\000";
-  Lexing.lex_default = 
+  Lexing.lex_default =
    "\001\000\000\000\000\000\255\255\000\000\255\255\000\000\000\000\
     \000\000\000\000\000\000\000\000\255\255\000\000\015\000\000\000\
     \255\255\000\000\255\255\255\255\000\000\000\000\023\000\000\000\
@@ -35,7 +35,7 @@ let __ocaml_lex_tables = {
     \000\000\255\255\000\000\255\255\000\000\000\000\000\000\255\255\
     \000\000\000\000\000\000\255\255\000\000\255\255\255\255\255\255\
     \255\255\255\255\255\255";
-  Lexing.lex_trans = 
+  Lexing.lex_trans =
    "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
     \000\000\000\000\017\000\050\000\000\000\000\000\000\000\000\000\
     \000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
@@ -220,7 +220,7 @@ let __ocaml_lex_tables = {
     \000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
     \000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
     \000\000\000\000\000\000\000\000\000\000\000\000\000\000";
-  Lexing.lex_check = 
+  Lexing.lex_check =
    "\255\255\255\255\255\255\255\255\255\255\255\255\255\255\255\255\
     \255\255\255\255\016\000\049\000\255\255\255\255\255\255\255\255\
     \255\255\255\255\255\255\255\255\255\255\255\255\255\255\255\255\
@@ -405,22 +405,22 @@ let __ocaml_lex_tables = {
     \255\255\255\255\255\255\255\255\255\255\255\255\255\255\255\255\
     \255\255\255\255\255\255\255\255\255\255\255\255\255\255\255\255\
     \255\255\255\255\255\255\255\255\255\255\255\255\255\255";
-  Lexing.lex_base_code = 
+  Lexing.lex_base_code =
    "";
-  Lexing.lex_backtrk_code = 
+  Lexing.lex_backtrk_code =
    "";
-  Lexing.lex_default_code = 
+  Lexing.lex_default_code =
    "";
-  Lexing.lex_trans_code = 
+  Lexing.lex_trans_code =
    "";
-  Lexing.lex_check_code = 
+  Lexing.lex_check_code =
    "";
-  Lexing.lex_code = 
+  Lexing.lex_code =
    "";
 }
 
 let rec quote lexbuf =
-    __ocaml_lex_quote_rec lexbuf 0
+   __ocaml_lex_quote_rec lexbuf 0
 and __ocaml_lex_quote_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
@@ -476,11 +476,11 @@ and __ocaml_lex_quote_rec lexbuf __ocaml_lex_state =
                      ( raise (Failure ("illegal character '" ^ (String.escaped (Lexing.lexeme lexbuf)) ^ "' within quote")) )
 # 478 "lexer.ml"
 
-  | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; 
+  | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf;
       __ocaml_lex_quote_rec lexbuf __ocaml_lex_state
 
 and comment lexbuf =
-    __ocaml_lex_comment_rec lexbuf 14
+   __ocaml_lex_comment_rec lexbuf 14
 and __ocaml_lex_comment_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
@@ -503,11 +503,11 @@ and __ocaml_lex_comment_rec lexbuf __ocaml_lex_state =
                     ( comment lexbuf )
 # 505 "lexer.ml"
 
-  | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; 
+  | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf;
       __ocaml_lex_comment_rec lexbuf __ocaml_lex_state
 
 and token lexbuf =
-    __ocaml_lex_token_rec lexbuf 22
+   __ocaml_lex_token_rec lexbuf 22
 and __ocaml_lex_token_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
@@ -691,7 +691,7 @@ and __ocaml_lex_token_rec lexbuf __ocaml_lex_state =
                ( raise (Failure ("illegal character '" ^ (String.escaped (Lexing.lexeme lexbuf)) ^ "'")) )
 # 693 "lexer.ml"
 
-  | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; 
+  | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf;
       __ocaml_lex_token_rec lexbuf __ocaml_lex_state
 
 ;;
