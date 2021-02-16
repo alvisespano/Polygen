@@ -1,0 +1,11 @@
+(executable
+  (name polygen)
+  (public_name polygen)
+  (flags (-w -27))
+  (libraries unix)
+)
+
+(rule
+  (target ver.ml)
+  (deps ver.ml.template DATE VERSION gen_ver.sh)
+  (action (with-stdout-to %{target} (run ./gen_ver.sh))))

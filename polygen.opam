@@ -1,0 +1,20 @@
+opam-version: "2.0"
+name: "polygen"
+version: "1.0.6"
+synopsis: "Polygen"
+description: "Polygen — a first effort towards satyre in computer science."
+maintainer: "Paolo Donadeo <p.donadeo@gmail.com>"
+authors: [ "Alvise Spanò <spano.alvise@gmail.com>" ]
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+]
+dev-repo: "git+https://github.com/alvisespano/Polygen.git"
+post-messages: [
+    "Polygen installed in %{bin}%/polygen"
+    {success & !user-setup:installed}
+]
+depends: [
+    "dune" { build & >= "2.8.1"}
+]
+homepage: "http://www.polygen.org/"
+bug-reports: "https://github.com/alvisespano/Polygen/issues"
