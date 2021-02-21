@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Polygen"
+    />
+    <title>Polygen</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div>Open the developer tool (typically F12) and type into the Javascript console: <pre>Polygen.generate(grammar)</pre></div>
+    <script src="../../_build/default/src/polygen_js.bc.js"></script>
+    <script type="text/javascript">
+const grammar = `
+I ::= "title:    Antanizer (real)\\n"
+    ^ "author:   Velenux &lt;velenux@karma.oltrelinux.com&gt;\\n"
+    ^ "language: italian\\n"
+    ^ "status:   mature\\n"
+    ^ "topic:    misc\\n"
+    ^ "audience: anybody\\n"
+    ^ "disclaim: usare con moderazione\\n"
+    ^ "created:  12/09/2003"
+    ;
+
+S ::= \\ [Incipit ] Frase ^ Punteggiatura [ S ] ;
+
+Incipit ::= insomma | ma lei^"," | come dire^"," | come fosse (Soggetto | Oggetto) ^ "." \\
+      | si parlava di (Soggetto | Oggetto) ^ ":" | ma^"," [ insomma^"," ] mi permetta ( ^ "!" \\ | ^ ":" | ^ "." \\ )
+      | no^"," [ no^"," [ no^"," ] ] attenzione ^ ";" | eh ^ ( "!" | "..." ) \\
+      | ehhhh ^ ("!" | "...") \\ | mi scusi ^ (^"," | "..." \\ )  | ah^"," pardon ^ "." \\
+      | no^"," dico ^ ( "!" \\ | "..." \\ | ":" ) ;
+
+Frase ::= Soggetto Verbo Azione Oggetto [^"," Inciso ^"," Frase ];
+
+Inciso ::=  ++ (in|nel) senso FiguraRetorica
+     | VerboGerundio (Soggetto | Oggetto) che [^"," Inciso ^"," ] (Soggetto | Oggetto) VerboImperfetto Azione (Soggetto | Oggetto) [ e Frase ];
+
+
+
+(* --------------- componenti della frase ------------------ *)
+
+Soggetto ::= +++ antani | tapioca | +++ supercazzola [ prematurata ]
+       | un gatto | +++ ComponiSbi | ComponiTapioca | ComponiTablinda
+       | una mucca | una pecora | un piccione | un tapiro
+       | un bradipo | prematurata [ la supercazzola ] | lei ;
+
+Verbo ::= ha | e ^ "\`" | ++ come fosse | fotte | frigge | succhia | soffia | mangia
+    | +++ (parla | disquisisce | blatera) [ AggettivoParlare ] [ di Argomenti ]
+    | +++ VerboInsulto (Soggetto | Oggetto) [ con AggettivoInsulto ]
+    | sbrodola | insignisce | paragona (Soggetto|Oggetto) con (Soggetto|Oggetto) e
+    | cristallizza | si infervora | ++ racconta storie | infittisce il mistero
+    | miagola | abbaia | +++ gioisce | ++ blinda | tira via;
+
+VerboGerundio ::= avendo (avuto| sbrodolato| fregato| succhiato| mangiato
+        | +++(parlato|disquisito|blaterato) [AggettivoParlare] [di Argomenti] [con (Soggetto|Oggetto)]
+        | VerboInsulto ^ to (Soggetto|Oggetto) [con AggettivoInsulto]
+        | paragonato (Soggetto|Oggetto) con (Oggetto) | raccontato storie
+        | miagolato| abbaiato| prematurato| tirato via )
+        | essendo (stato| ^ si infervorato| nato| fritto) ;
+
+VerboImperfetto ::= aveva | era | sbrodolava ;
+
+VerboInsulto ::= fanculizza | infama | umilia | disprezza | cretineggia ;
+
+Azione ::= ParticellePronominali | Posizione | insieme a
+     | ++ Verbo Avverbio Oggetto
+     | con (Soggetto | Oggetto) e Verbo Azione | soltanto con NumeroDi
+     | con [lo] scappellamento a (destra | sinistra) [ carpiato [all'indietro] ] ;
+
+Oggetto ::= palle | ++ antani | ComponiTapioca | ComponiSbi | ComponiTablinda
+      | mucca | pecora | tapiro | bradipo | prematurata [la supercazzola]
+      | [la] supercazzola [prematurata] | scarpallaccia [ ^ "-" ^ allacciascarpa ]
+      | una cosa [da non credere|impossibile] | quintana | trinita ^ "\`"
+      | Denari ;
+
+
+
+(* --------------- sotto-componenti ---------------- *)
+
+Posizione ::= sopra [a|di] | sotto [a|di] | a fianco [a|di] | dietro [a|di]
+        | davanti [a|di] | in mezzo [a|di] ;
+
+AggettivoParlare ::= con ( moderazione | gioia | disgusto | apprensione | vivacita ^ "\`"
+             | curiosita ^ "\`" | disprezzo | amore | ipocrisia ) ;
+
+AggettivoInsulto ::= moderazione | cattiveria | serieta ^ "\`" | odio | amore
+           | stranezza | sincerita ^ "\`" ;
+
+
+
+(* --------------- "utils" ----------------- *)
+
+Punteggiatura ::= Ex: "!" [ ^ (Punteggiatura.Ex | Punteggiatura.Quest) ]
+        | Quest: "?" [ ^ (Punteggiatura.Ex | Punteggiatura.Quest) ]
+        | +++ Norm: "." | Norm: "..." ;
+
+ParticellePronominali ::= di | a | da | in | con [ NumeroDi ] | su | per | fra [ NumeroDi ] | tra [ NumeroDi ] ;
+
+NumeroDi ::= un numero imprecisato di | Numero [ ^ Numero ] [ ^ Numero ] ;
+
+Numero ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 ;
+
+Argomenti ::= corse di ( cani | gatti | moto | \\ f1 | levrieri | macchine )
+        | rally [in siberia | nel deserto] | fumetti | libri | tante cose
+        | musica [rock | classica | rap | pop | alternativa | strana]
+        | cantanti [rock | folk | depressi | allegri | strani ]
+        | scoregge | rutti | peti | piante | fiori | pollice verde
+        | foglie di (platano | pioppo | quercia | ulivo)
+        | cucina [ creativa | alternativa | vegetariana ]
+        | alcool | preparazione di (cocktail | bombe | attentati
+                | [deliziosi | ottimi] pranzetti | esami dell"'"uni )
+        | tante [ tante | tante tante ] cose
+        ;
+
+ComponiSbi ::= sbi ^ VarieI ^ gu ^ VarieI ;
+
+ComponiTapioca ::= VarieTara ^ [ VarieTara ] ^ tapioca ;
+
+ComponiTablinda ::= VarieTara ^ [ VarieTara ] ^ tablinda ;
+
+VarieI ::= di | fi | li | ri | si ;
+
+VarieTara ::= ta | ra | tara | tarata ;
+
+Denari ::= Denaro [ ^"," Denari ] ;
+
+Denaro ::= sterline | dollari | svanziche | rubli | lire | euri | pesetas
+     | franchi (svizzeri | francesi) | moneta [ forte | debole ] ;
+
+Avverbio ::= ovviamente | adesso | gia ^ "\`" | spesso | raramente
+       | qualche volta | attualmente | giustamente | incredibilmente ;
+
+FiguraRetorica ::= allegorico | allusivo | anacolutico | anacronico
+         | anadiplotico | anaforico | analitico | antitetico
+         | arcaico | catacretico | connotativo | denotativo
+         | ellittico | enfatico | epifonemaico | inverso
+         | ironico | metaforico | mimetico | omoteleutico
+         | onomatopeico | ossimorico | paradossale
+         | pleonastico | sarcastico | sinestetico | topico ;`;
+    </script>
+    <div id="root"></div>
+  </body>
+</html>

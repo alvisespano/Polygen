@@ -9,12 +9,21 @@
 
 (library
   (name polygen_lib)
+  (public_name polygen_lib)
   (flags (-w -27))
   (libraries unix)
   (modules
     absyn check env err fake gen io lexer
     load parser polygen_lib prelude pre ver)
 )
+
+(executable
+  (name polygen_js)
+  (modes js)
+  (flags (-w -27))
+  (libraries polygen_lib)
+  (modules polygen_js)
+  (preprocess (pps js_of_ocaml-ppx)))
 
 (rule
   (target ver.ml)
