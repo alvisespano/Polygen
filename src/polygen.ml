@@ -28,7 +28,6 @@ let start    = ref "S"
 let sources  = ref []
 let dest     = ref stdout
 let ps       = ref false
-let seed     = ref None
 let help     = ref false
 let eof      = ref "\n"
 let verbose  = ref false
@@ -58,7 +57,7 @@ let specl = [
 
   ("-pre", Arg.Unit (fun () -> mode := Preprocess), "     output preprocessed source grammar");
 
-  ("-seed", Arg.Int (fun n -> seed := Some n; Gen.do_shuffle := false), "N   pass unsigned integer N as random seed");
+  ("-seed", Arg.Int (fun n -> Polygen_lib.seed := Some n; Gen.do_shuffle := false), "N   pass unsigned integer N as random seed");
 
   ("-S", Arg.String (fun s -> start := s), "SYM    use SYM as starting non-terminal symbol (default: SYM = S)");
 
@@ -81,55 +80,16 @@ let usage = (sprintf "Polygen (type 2) v%s build %s - http://www.polygen.org\n" 
 
 let msg s = if !verbose then (fprintf !dest "* %s\n" s; flush !dest) else ()
 
-let get_decls0 source =
-  let decls =
-    msg ("loading source file \"" ^ source ^ "\"...");
-    load_decls source in
-  let _ = msg "checking grammar..."; Check.check !lbs decls !start in
-  let _ = flush stderr; flush stdout in
-  decls
-
-let get_decls1 source =
-  let decls0 = get_decls0 source in
-  msg "preprocessing grammar...";
-  Pre.pre decls0
-
 (* main *)
 
 let main source =
   match !mode with
-  | Check -> ignore (get_decls0 source)
-  | Preprocess -> fprintf !dest "%s\n" (Absyn1.pretty_decls "" (get_decls1 source))
-  | Generate -> begin
-    (* load complied or source grammar *)
-    let decls =
-      try
-        msg "loading compiled grammar...";
-        load_obj source
-      with Failure s -> msg s; get_decls1 source in
-
-    (* generate *)
-    msg ("PRNG seed: " ^ (string_of_int (surely_some !seed)));
-    msg ("EOF string: \"" ^ (String.escaped !eof) ^ "\"");
-    msg ("initial label environment: " ^ LabelSet.pretty !lbs) ;
-    msg ("generator output:");
-    for i = 1 to !times do
-      fprintf !dest "%s%s" (Gen.gen !lbs decls !start) !eof
-    done;
-
-    (* store compiled grammar *)
-    try
-      msg "storing compiled grammar...";
-      store_obj source decls
-    with Failure s -> msg s
-  end
+  | Check -> ignore (Polygen_lib.get_decls0 ~msg ~lbs:!lbs ~start:!start source)
+  | Preprocess -> fprintf !dest "%s\n" (Absyn1.pretty_decls "" (Polygen_lib.get_decls1 ~msg source))
+  | Generate -> Polygen_lib.generate ~msg ~eof:!eof ~lbs:!lbs ~start:!start ~times:!times ~dest:!dest source
 
 let () =
-  let () = (
-    match !seed with
-    | None   -> Random.self_init (); seed := Some (Random.bits ())
-    | Some s -> Random.init s
-  ) in
+  Polygen_lib.pRNG_init ();
 
   let () =
     if (Array.length Sys.argv) < 2 || !help
