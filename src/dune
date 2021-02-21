@@ -3,16 +3,14 @@
   (public_name polygen)
   (package polygen)
   (flags (-w -27))
-  (libraries unix polygen_lib)
+  (libraries polygen_lib)
   (modules polygen)
 )
 
 (library
   (name polygen_lib)
-  (public_name polygen_lib)
   (flags (-w -27))
   (libraries unix)
-  (wrapped false)
   (modules
     absyn check env err fake gen io lexer
     load parser polygen_lib prelude pre ver)

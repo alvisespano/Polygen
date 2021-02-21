@@ -1,67 +1,51 @@
-open Printf
-open List
+module Prelude = Prelude
+module Absyn = Absyn
+module Check = Check
+module Pre = Pre
+module Gen = Gen
+module Err = Err
+module Io = Io
+module Parser = Parser
+module Lexer = Lexer
+module Ver = Ver
 
 open Prelude
-open Prelude
-open Absyn
-open Check
-open Pre
 open Gen
 open Err
 open Io
 
-let seed : int option ref = ref None
+type declarations = Absyn.Absyn1.decl list
 
-let get_decls0
-    ?(msg=(fun _ -> ()))
-    ?(lbs=LabelSet.empty)
-    ?(start="S")
-    source =
-  let decls =
-    msg ("loading source file \"" ^ source ^ "\"...");
-    load_decls source in
-  let _ = msg "checking grammar..."; Check.check lbs decls start in
-  let _ = flush stderr; flush stdout in
-  decls
+let pRNG_init ?(seed=None) () =
+  match seed with
+  | None   -> (Random.self_init (); Random.bits ())
+  | Some s -> (Random.init s; s)
 
-let get_decls1
-    ?(msg=(fun _ -> ()))
-    source =
-  let decls0 = get_decls0 source in
-  msg "preprocessing grammar...";
-  Pre.pre decls0
+let uerror s = Error (Printf.sprintf "error: %s\n" s)
+let error loc s = uerror (localized_prompt s loc)
+let syntax_error file lexbuf s =
+  error (localize (Lexing.lexeme_start lexbuf, Lexing.lexeme_end lexbuf)) s
 
-let pRNG_init () =
-  match !seed with
-  | None   -> Random.self_init (); seed := Some (Random.bits ())
-  | Some s -> Random.init s
+let load_decls grammar =
+  try
+    let _ = jump "stdin" in
+    let lexbuf = Lexing.from_string grammar in
+    try
+      let decls = Parser.source Lexer.token lexbuf in
+      let _ = jump_back () in
+      Ok (Pre.Pre.pre decls)
+    with
+    | Failure s -> syntax_error "stdin" lexbuf s
+
+    |  Parsing.Parse_error ->
+      let s = String.escaped (Lexing.lexeme lexbuf) in
+      let unexpected = (if s = "" then "empty token" else "token \"" ^ s ^ "\"") in
+      syntax_error "stdin" lexbuf ("unexpected " ^ unexpected)
+  with
+  | Sys_error s -> uerror ("cannot parse from file \"" ^ s ^ "\"")
 
 let generate
-    ?(msg=(fun _ -> ()))
-    ?(eof="\n")
     ?(lbs=LabelSet.empty)
     ?(start="S")
-    ?(times=1)
-    ?(dest=stdout)
-    source =
-  (* load complied or source grammar *)
-  let decls =
-    try
-      msg "loading compiled grammar...";
-      load_obj source
-    with Failure s -> msg s; get_decls1 source in
-
-  (* generate *)
-  msg ("PRNG seed: " ^ (string_of_int (surely_some !seed)));
-  msg ("EOF string: \"" ^ (String.escaped eof) ^ "\"");
-  msg ("initial label environment: " ^ LabelSet.pretty lbs) ;
-  msg ("generator output:");
-  for i = 1 to times do
-    fprintf dest "%s%s" (Gen.gen lbs decls start) eof
-  done;
-
-  (* store compiled grammar *)
-  try
-    msg "storing compiled grammar...";
-    store_obj source decls
-  with Failure s -> msg s
+    decls =
+  Gen.gen lbs decls start
