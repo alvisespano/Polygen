@@ -23,3 +23,6 @@ Session.vim
 
 # dune working directory
 _build/
+
+# opam local switch
+_opam/

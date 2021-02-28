@@ -3,16 +3,18 @@
   (public_name polygen)
   (package polygen)
   (flags (-w -27))
-  (libraries polygen_lib)
+  (libraries polygen)
   (modules polygen)
 )
 
 (library
   (name polygen_lib)
-  (public_name polygen_lib)
+  (public_name polygen)
+  ;(package polygen)
   (flags (-w -27))
   (libraries unix)
   (modules
+    polygen_lib
     absyn check env err fake gen io lexer
     load parser polygen_lib prelude pre ver)
 )
@@ -21,9 +23,14 @@
   (name polygen_js)
   (modes js)
   (flags (-w -27))
-  (libraries polygen_lib)
+  (libraries polygen)
   (modules polygen_js)
   (preprocess (pps js_of_ocaml-ppx)))
+
+(install
+  (files (polygen_js.bc.js as polygen.js))
+  (section lib)
+  (package polygen))
 
 (rule
   (target ver.ml)

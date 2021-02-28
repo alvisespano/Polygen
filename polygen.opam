@@ -10,11 +10,13 @@ build: [
 ]
 dev-repo: "git+https://github.com/alvisespano/Polygen.git"
 post-messages: [
-    "Polygen installed in %{bin}%/polygen"
-    {success & !user-setup:installed}
+  "Polygen installed in %{bin}%/polygen"
+  {success & !user-setup:installed}
 ]
 depends: [
-    "dune" { build & >= "2.8.1"}
+  "js_of_ocaml"     { >= "3.9.0"}
+  "js_of_ocaml-ppx" { >= "3.9.0"}
+  "dune"            { build & >= "2.8.2"}
 ]
 homepage: "http://www.polygen.org/"
 bug-reports: "https://github.com/alvisespano/Polygen/issues"
