@@ -103,16 +103,17 @@ Polygen is also a library: if you want to include functions from Polygen in your
 )
 ```
 
-In your program the library is contained in the `Polygen_lib` module.
+Inside your program you have access to the library via the `Polygen_lib` module.
+
 
 ### Polygen inside the browser
 
-The generative subset of the Polygen library is also available in the browser because the whole library is also transcompiled into Javascript.
+The generative subset of the Polygen library is also available in the **browser** because the whole library is also transcompiled into Javascript.
 
-The relevant file is installed in `HOME/.opam/default/lib/polygen/polygen.js`: copy that file where you prefer and include this line into your HTML:
+The relevant file is installed in `HOME/.opam/default/lib/polygen/polygen.js`: copy that file where you prefer and include the following line into your HTML:
 
 ```html
-<script src="polygen.js"></script>
+    <script src="polygen.js"></script>
 ```
 
 From any Javascript program you can now access the global `Polygen` object in which a single function is present: `generate`.
