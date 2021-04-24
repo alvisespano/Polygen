@@ -25,7 +25,7 @@ Thus, in order to compile it by yourself, you need the following:
 For instructions to install all of these components see [building](#building) below.
 
 
-Yuo can learn more about OCaml reading the [official site](https://ocaml.org/).
+Yuo can learn more about OCaml browsing the [official site](https://ocaml.org/).
 
 
 ### Portability
