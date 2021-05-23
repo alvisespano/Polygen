@@ -16,7 +16,7 @@ post-messages: [
 depends: [
   "js_of_ocaml"     { >= "3.9.0"}
   "js_of_ocaml-ppx" { >= "3.9.0"}
-  "dune"            { build & >= "2.8.2"}
+  "dune"            {>= "2.8.2"}
 ]
 homepage: "http://www.polygen.org/"
 bug-reports: "https://github.com/alvisespano/Polygen/issues"
