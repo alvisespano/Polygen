@@ -31,7 +31,7 @@ module Gen =
             []                 -> ""
           | B.Epsilon :: l'    -> post cap spc l'
           | B.Concat :: l'     -> post cap "" l'
-          | B.Capitalize :: l' -> post String.capitalize spc l'
+          | B.Capitalize :: l' -> post String.capitalize_ascii spc l'
           | B.Term s :: l'     -> spc ^ (cap s) ^ (post (fun s -> s) " " l')
 
 
