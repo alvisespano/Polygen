@@ -1,0 +1,18 @@
+I ::= "";
+
+S ::= Subject Verb ^"s " Adjective ^"ly " Object;
+
+Noun ::= "sympathy" | "circulation" | "stop" | "education" | "number" | "one" |
+	"pro" | "contra" | "tree" | "life";
+
+Subject ::= ("the" | "a" | "") Adjective Noun;
+
+Adjective ::= "sympathetic" | "red" | "green" | "blue" |
+	"brown" | "small" | "big" | "round" | "steepy" | Verb ^"ing";
+
+Verb ::= "sympathize" | "circulat" | "stopp" | "go" | "walk" | "drive" | "shoot" |
+	"wander" | "wonder" | "educate";
+
+Object ::= Subject;
+
+
