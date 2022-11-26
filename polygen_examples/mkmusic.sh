@@ -1,34 +1,33 @@
 #!/bin/bash
 
+doit() {
+	cp ./music.grm.tmpl /tmp
+	echo $1 ";" >> /tmp/music.grm.tmpl
+	polygen /tmp/music.grm.tmpl > /tmp/xy.abc
+       	abc2midi /tmp/xy.abc -o /tmp/xy.wav -Q 90
+	echo $3 > /tmp/wildmidi.cfg 
+	ls $2/*pat | shuf | nl -v 0 >> /tmp/wildmidi.cfg 
+	wildmidi -c /tmp/wildmidi.cfg -o `mktemp`.xy.wav /tmp/xy.wav
+}
+
 while [ true ]; do
-	rm /tmp/xy*.mid
-	rm /tmp/xy*.wav
-	rm /tmp/xy*.mp3
+	rm /tmp/*xy*.mid
+	rm /tmp/*xy*.wav
+	rm /tmp/*xy*.mp3
 	rm /tmp/song.mp3
 
-	polygen ./music.grm > /tmp/xy.abc
-       	abc2midi /tmp/xy.abc -Q 90
-	for x in /tmp/xy*.mid; do
-		echo bank 0 >> /tmp/wildmidi.cfg 
-		ls /opt/polygen_examples/Tone_001/*pat | shuf | nl -v 0 >> /tmp/wildmidi.cfg 
-		wildmidi -c /tmp/wildmidi.cfg -o $x.wav $x
-	done
+	doit "Note ::= (\"c\"|\"d\"|\"e\"|\"f\"|\"g\"|\"a\"|\"b\") ^(\"/\"|\"2\"|\"\")" "/opt/polgen_examples/Tone_001" "bank 0"
+	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^(\"2\"|\"3\"|\"4\")" "/opt/polygen_examples/Tone_001" "bank 0"
+	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^(\"2\"|\"3\"|\"4\")" "/opt/polygen_examples/Drum_001" "drumbank 0"
+	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^(\"2\"|\"3\"|\"4\")" "/opt/polygen_examples/Drum_001" "drumbank 0"
 
-	polygen ./music.grm > /tmp/xyd.abc
-       	abc2midi /tmp/xyd.abc -Q 135
-	for x in /tmp/xyd*.mid; do
-		echo drumbank 0 >> /tmp/wildmidi.cfg 
-		ls /opt/polygen_examples/Drum_001/*pat | shuf | nl -v 0 >> /tmp/wildmidi.cfg 
-		wildmidi -c /tmp/wildmidi.cfg -o $x.wav $x
-	done
-
-	for x in /tmp/xy*wav;do
+	for x in /tmp/*xy*wav;do
 		ffmpeg -i $x -filter:a loudnorm $x.mp3
 	done
 
 	inp="`find /tmp -maxdepth 1 -iname "xy*.mp3" -printf " -stream_loop -1 -t 180s -i \"%h/%f\" "`"
 
-	ffmpeg $inp -filter_complex:a amerge=inputs=`ls /tmp/xy*.mp3 | wc -l` /tmp/song.mp3
+	ffmpeg $inp -filter_complex:a amerge=inputs=`ls /tmp/*xy*.mp3 | wc -l` /tmp/song.mp3
 
 	cp /tmp/song.mp3 ~/$RANDOM.mp3
 
