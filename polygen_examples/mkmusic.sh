@@ -2,6 +2,8 @@
 
 export keys=(C D E F G A B)
 export key=${keys[$(( $RANDOM % ${#keys[*]} ))]}
+export vers=("" "_" "^")
+export ver=${vers[$(( $RANDOM % ${#vers[*]} ))]}
 
 doit() {
 	cp ./music.grm.tmpl /tmp
