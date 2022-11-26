@@ -1,0 +1,30 @@
+I ::= "";
+
+S ::= Time Subject Verb ^"s " Adjective ^"ly " Object ^".";
+
+Time ::= ("on" | "after" | "before" | "") ("next" | "") 
+	("monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday" | "")
+	("morning" | "evening" | "night" | "");
+
+Noun ::= "sympathy" | "circulation" | "stop" | "education" | "number" | "one" |
+	"pro" | "contra" | "tree" | "life" | "party" | "state" | "liberty" |
+	"statue" | "racism" | "race" | "racist";
+
+Subject ::= ("the" | "a" | "") Adjective Noun;
+
+Adjective ::= ("non-" | "anti-" | "un-" | "") ^Adjective0;
+
+Adjective0 ::= "sympathetic" | "red" | "green" | "blue" |
+	"brown" | "small" | "big" | "round" | "steepy" | 
+	"special" | "unique" | "flat" | "rough" | "deep" |
+	"high" | "low" |
+	Verb ^"ing";
+
+Verb ::= ("un-" | "non-" | "anti-" | "") ^Verb0;
+Verb0 ::= "sympathize" | "circulat" | "stopp" | "go" | "walk" | "drive" | "shoot" |
+	"wander" | "wonder" | "educate" | "say" | "tell" | "forget" | "remember" |
+	"memorize";
+
+Object ::= Subject;
+
+
