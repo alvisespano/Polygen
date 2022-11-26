@@ -3,9 +3,10 @@
 while [ true ]; do
 	rm /tmp/xy*.mid
 	rm /tmp/xy*.wav
+	rm /tmp/xy*.mp3
+
 	polygen /usr/share/polygen/music.grm > /tmp/xy.abc
        	abc2midi /tmp/xy.abc -Q 90
-
 	for x in /tmp/xy*.mid; do
 		echo dir /usr/share/midi/freepats/Tone_000/ > /tmp/wildmidi.cfg 
 		echo bank 0 >> /tmp/wildmidi.cfg 
@@ -13,11 +14,24 @@ while [ true ]; do
 		wildmidi -c /tmp/wildmidi.cfg -o $x.wav $x
 	done
 
-	inp="`find /tmp -maxdepth 1 -iname "xy*wav" -printf " -i \"%h/%f\" "`"
+	polygen /usr/share/polygen/music.grm > /tmp/xyd.abc
+       	abc2midi /tmp/xyd.abc -Q 90
+	for x in /tmp/xyd*.mid; do
+		echo dir /usr/share/midi/freepats/Drum_000/ > /tmp/wildmidi.cfg 
+		echo drumbank 0 >> /tmp/wildmidi.cfg 
+		ls /usr/share/midi/freepats/Drum_000/ | shuf | nl -v 0 >> /tmp/wildmidi.cfg 
+		wildmidi -c /tmp/wildmidi.cfg -o $x.wav $x
+	done
 
-	ffmpeg -y $inp -filter_complex:a amerge /tmp/xy.mp3
+	for x in /tmp/xy*wav;do
+		ffmpeg -i $x -filter:a loudnorm $x.mp3
+	done
 
-	mpg123 /tmp/xy.mp3
+	inp="`find /tmp -maxdepth 1 -iname "xy*.mp3" -printf " -i \"%h/%f\" "`"
+
+	ffmpeg -y $inp -filter_complex:a amerge /tmp/song.mp3
+
+	mpg123 /tmp/song.mp3
 
 	wait.exe
 done
