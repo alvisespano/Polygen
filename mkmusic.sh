@@ -15,7 +15,7 @@ while [ true ]; do
 	done
 
 	polygen /usr/share/polygen/music.grm > /tmp/xyd.abc
-       	abc2midi /tmp/xyd.abc -Q 90
+       	abc2midi /tmp/xyd.abc -Q 180
 	for x in /tmp/xyd*.mid; do
 		echo dir /usr/share/midi/freepats/Drum_000/ > /tmp/wildmidi.cfg 
 		echo drumbank 0 >> /tmp/wildmidi.cfg 
@@ -27,9 +27,9 @@ while [ true ]; do
 		ffmpeg -i $x -filter:a loudnorm $x.mp3
 	done
 
-	inp="`find /tmp -maxdepth 1 -iname "xy*.mp3" -printf " -i \"%h/%f\" "`"
+	inp="`find /tmp -maxdepth 1 -iname "xy*.mp3" -printf " -stream_loop -1 -t 120s -i \"%h/%f\" "`"
 
-	ffmpeg -y $inp -filter_complex:a amerge /tmp/song.mp3
+	ffmpeg -y $inp -filter_complex:a amerge=inputs=`ls /tmp/xy*.mp3 | wc -l` /tmp/song.mp3
 
 	mpg123 /tmp/song.mp3
 
