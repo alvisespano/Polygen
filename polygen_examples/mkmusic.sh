@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export keys=(c d e f g a b C D E F G A B)
+export keys=(C D E F G A B)
 export key=${keys[$(( $RANDOM % ${#keys[*]} ))]}
 
 doit() {
@@ -22,8 +22,8 @@ while [ true ]; do
 
 	doit "Note ::= (\"c\"|\"d\"|\"e\"|\"f\"|\"g\"|\"a\"|\"b\") ^[\"/\"|\"2\"]" "/opt/polygen_examples/Tone_001" "bank 0" 90
 	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^[\"2\"|\"3\"|\"4\"]" "/opt/polygen_examples/Tone_001" "bank 0" 90
-	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^[\"2\"|\"3\"|\"4\"]" "/opt/polygen_examples/Drum_001" "drumbank 0" 180
-	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^[\"2\"|\"3\"|\"4\"]" "/opt/polygen_examples/Drum_001" "drumbank 0" 180
+	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^(\"2\"|\"3\"|\"4\")" "/opt/polygen_examples/Drum_001" "drumbank 0" 180
+	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^(\"2\"|\"3\"|\"4\")" "/opt/polygen_examples/Drum_001" "drumbank 0" 180
 
 	for x in /tmp/*xy.wav;do
 		ffmpeg -i $x -filter:a loudnorm $x.mp3
