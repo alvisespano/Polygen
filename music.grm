@@ -1,26 +1,16 @@
-S ::= "X: 1\nM: 4/4\nL: 1/4\nK: D\n" Song;
+S ::= "X:1\nM:4/4\nL:1/8\nK:C\n" Song "\n\n"
+	"X:2\nM:4/4\nL:1/8\nK:C\n" SongB;
 
 Song ::= Song0 | " |: " Song0 " :| " | Song;
-
-Song0 ::= 
-	(Takt " | " Song) | 
-	(Takt " | " Song) | 
-	(Takt " | " Song) | 
-	(Takt " | " Song) | 
-	(Takt " | " Song) | 
-	(Takt " | " Song) | 
-	Takt;
-
-Takt ::= Note | 
-	Note Takt |
-	Note Takt |
-	Note Takt |
-	Note Takt |
-	Note Takt |
-	Note Takt ;
-
-Note ::= Note0 ^("/" | "2" | "3" | "4") | Note0;
-
+Song0 ::= (Takt " | " Song) | (Takt " | " Song) | (Takt " | " Song) | (Takt " | " Song) | (Takt " | " Song) | (Takt " | " Song) | Takt;
+Takt ::= Note | Note Takt | Note Takt | Note Takt | Note Takt | Note Takt | Note Takt ;
+Note ::= Note0 ^("/" | "2" | "");
 Note0 ::= "c" | "d" | "e" | "f" | "g" | "a" | "b";
+
+SongB ::= SongB0 | " |: " SongB0 " :| " | SongB;
+SongB0 ::= (TaktB " | " SongB) | (TaktB " | " SongB) | (TaktB " | " SongB) | (TaktB " | " SongB) | (TaktB " | " SongB) | (TaktB " | " SongB) | TaktB;
+TaktB ::= NoteB | NoteB TaktB | NoteB TaktB | NoteB TaktB | NoteB TaktB | NoteB TaktB | NoteB TaktB ;
+NoteB ::= NoteB0 ^("2" | "3" | "4");
+NoteB0 ::= "C" | "D" | "E" | "F" | "G" | "A" | "B";
 
 
