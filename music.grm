@@ -16,15 +16,15 @@ Song0 ::=
 	(Takt " | " Song) | 
 	Takt;
 
-Takt ::= 
-	Note Note Note Note | 
-	Note ^"2" Note Note |
-	Note Note ^"2" Note |
-	Note Note Note ^"2" |
-	Note ^"3" Note |
-	Note Note ^"3" ;
+Takt ::= Note | 
+	Note Takt |
+	Note Takt |
+	Note Takt |
+	Note Takt |
+	Note Takt |
+	Note Takt ;
 
-Note ::= Note0 ^"/" Note0 | Note0;
+Note ::= Note0 ^("/" | "2" | "3" | "4") | Note0;
 
 Note0 ::= "c" | "d" | "e" | "f" | "g" | "a" | "b";
 
