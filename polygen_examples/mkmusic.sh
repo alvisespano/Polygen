@@ -1,7 +1,11 @@
 #!/bin/bash
 
+export keys=(c d e f g a b C D E F G A B)
+export key=${keys[$(( $RANDOM % ${#keys[*]} ))]}
+
 doit() {
 	cp ./music.grm.tmpl /tmp
+	echo "Init ::= \"X:$RANDOM\nK:$key\n\";" >> /tmp/music.grm.tmpl
 	echo $1 ";" >> /tmp/music.grm.tmpl
 	polygen /tmp/music.grm.tmpl > /tmp/xy.abc
        	abc2midi /tmp/xy.abc -o /tmp/xy.mid -Q $4
