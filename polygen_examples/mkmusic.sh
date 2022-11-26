@@ -15,7 +15,7 @@ while [ true ]; do
 	done
 
 	polygen ./music.grm > /tmp/xyd.abc
-       	abc2midi /tmp/xyd.abc -Q 180
+       	abc2midi /tmp/xyd.abc -Q 135
 	for x in /tmp/xyd*.mid; do
 		echo drumbank 0 >> /tmp/wildmidi.cfg 
 		ls /opt/polygen_examples/Drum_001/*pat | shuf | nl -v 0 >> /tmp/wildmidi.cfg 
