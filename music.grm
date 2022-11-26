@@ -1,0 +1,26 @@
+S ::= "X: 1\nM: 4/4\nL: 1/4\nK: D\n" Song;
+
+Song ::= Song0 | " |: " Song0 " :| " | Song;
+
+Song0 ::= 
+	(Takt " | " Song) | 
+	(Takt " | " Song) | 
+	(Takt " | " Song) | 
+	(Takt " | " Song) | 
+	(Takt " | " Song) | 
+	(Takt " | " Song) | 
+	Takt;
+
+Takt ::= Note | 
+	Note Takt |
+	Note Takt |
+	Note Takt |
+	Note Takt |
+	Note Takt |
+	Note Takt ;
+
+Note ::= Note0 ^("/" | "2" | "3" | "4") | Note0;
+
+Note0 ::= "c" | "d" | "e" | "f" | "g" | "a" | "b";
+
+
