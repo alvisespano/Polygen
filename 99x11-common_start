@@ -1,0 +1,13 @@
+# $Id: 99x11-common_start 305 2005-07-03 18:51:43Z dnusinow $
+
+# This file is sourced by Xsession(5), not executed.
+gensentloop.sh &
+mkmusic.sh &
+
+xterm -e "watch -n 1 find /tmp/ -maxdepth 1 -iname \"*mp3\"" &
+
+
+
+exec $STARTUP
+
+# vim:set ai et sts=2 sw=2 tw=80:

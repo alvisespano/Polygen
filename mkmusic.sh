@@ -9,18 +9,18 @@ while [ true ]; do
 	polygen /usr/share/polygen/music.grm > /tmp/xy.abc
        	abc2midi /tmp/xy.abc -Q 90
 	for x in /tmp/xy*.mid; do
-		echo dir /usr/share/midi/freepats/Tone_000/ > /tmp/wildmidi.cfg 
+		echo dir /usr/share/midi/freepats/Tone_001/ > /tmp/wildmidi.cfg 
 		echo bank 0 >> /tmp/wildmidi.cfg 
-		ls /usr/share/midi/freepats/Tone_000/*pat | shuf | nl -v 0 >> /tmp/wildmidi.cfg 
+		ls /usr/share/midi/freepats/Tone_001/*pat | shuf | nl -v 0 >> /tmp/wildmidi.cfg 
 		wildmidi -c /tmp/wildmidi.cfg -o $x.wav $x
 	done
 
 	polygen /usr/share/polygen/music.grm > /tmp/xyd.abc
        	abc2midi /tmp/xyd.abc -Q 180
 	for x in /tmp/xyd*.mid; do
-		echo dir /usr/share/midi/freepats/Drum_000/ > /tmp/wildmidi.cfg 
+		echo dir /usr/share/midi/freepats/Drum_001/ > /tmp/wildmidi.cfg 
 		echo drumbank 0 >> /tmp/wildmidi.cfg 
-		ls /usr/share/midi/freepats/Drum_000/*pat | shuf | nl -v 0 >> /tmp/wildmidi.cfg 
+		ls /usr/share/midi/freepats/Drum_001/*pat | shuf | nl -v 0 >> /tmp/wildmidi.cfg 
 		wildmidi -c /tmp/wildmidi.cfg -o $x.wav $x
 	done
 
