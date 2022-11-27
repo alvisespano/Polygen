@@ -18,17 +18,20 @@ doit() {
 	wildmidi -c /tmp/wildmidi.cfg -o `mktemp`.xy.wav /tmp/xy.mid
 }
 
+tunes="+(Guitar|Piano|Flute|Harp|Cello|Oboe)"
+drums="+(Timb|Cymbal|Tom|Clap|Wood|Cuica)"
+
 while [ true ]; do
 	rm /tmp/*xy*.mid
 	rm /tmp/*xy*.wav
 	rm /tmp/*xy*.mp3
 	rm /tmp/song.mp3
 
-	doit "Note ::= (\"c\"|\"d\"|\"e\"|\"f\"|\"g\"|\"a\"|\"b\") ^[\"/\"|\"2\"]" "Tone_000" "bank 0" 90 "+(Guitar|Piano|Flute|Harp|Cello|Oboe|String)"
-	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^[\"2\"|\"3\"|\"4\"]" "Tone_000" "bank 0" 90 "+(Guitar|Piano|Flute|Harp|Cello|Oboe|String)"
+	doit "Note ::= (\"c\"|\"d\"|\"e\"|\"f\"|\"g\"|\"a\"|\"b\") ^[\"/\"|\"2\"]" "Tone_000" "bank 0" 90 $tunes
+	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^[\"2\"|\"3\"|\"4\"]" "Tone_000" "bank 0" 90 $tunes
 	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^[\"2\"|\"3\"|\"4\"]" "Tone_000" "bank 0" 90 "Bass"
-	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^(\"2\"|\"3\"|\"4\")" "Drum_000" "drumbank 0" 180 ""
-	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^(\"2\"|\"3\"|\"4\")" "Drum_000" "drumbank 0" 180 ""
+	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^(\"2\"|\"3\"|\"4\")" "Drum_000" "drumbank 0" 180 $drums
+	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^(\"2\"|\"3\"|\"4\")" "Drum_000" "drumbank 0" 180 $drums
 	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^(\"2\"|\"3\"|\"4\")" "Drum_000" "drumbank 0" 180 "Kick"
 
 	for x in /tmp/*xy.wav;do
