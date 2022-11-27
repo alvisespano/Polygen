@@ -36,7 +36,7 @@ export tempo=80 + $(( $RANDOM % 20 ))
 	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^(\"2\"|\"3\"|\"4\")" "Drum_000" "drumbank 0" $(( 2 * $tempo )) "Kick"
 
 	for x in /tmp/*xy.wav;do
-		ffmpeg -t 180s -i $x -filter:a loudnorm $x.mp3
+		ffmpeg -t 180s -i $x -filter:a lowpass -filter:a loudnorm $x.mp3
 	done
 
 	inp="`find /tmp -maxdepth 1 -iname "*xy*.mp3" -printf " -t 180s -i \"%h/%f\" "`"
