@@ -18,7 +18,7 @@ doit() {
 	wildmidi -c /tmp/wildmidi.cfg -o `mktemp`.xy.wav /tmp/xy.mid
 }
 
-tunes="+(Guitar|Piano|Flute|Harp|Cello|Oboe)"
+tunes="+(Guitar|Piano|Flute|Harp|Cello|Oboe|Organ)"
 drums="+(Timb|Cymbal|Tom|Clap|Wood)"
 
 while [ true ]; do
@@ -44,7 +44,7 @@ while [ true ]; do
 
 	cp /tmp/song.mp3 ~/$RANDOM.mp3
 
-	mpg123 /tmp/song.mp3
+	#mpg123 /tmp/song.mp3
 #exit 0
 	#wait.exe
 done
