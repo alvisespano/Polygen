@@ -19,7 +19,7 @@ doit() {
 }
 
 tunes="+(Guitar|Piano|Flute|Harp|Cello|Oboe)"
-drums="+(Timb|Cymbal|Tom|Clap|Wood|Cuica)"
+drums="+(Timb|Cymbal|Tom|Clap|Wood)"
 
 while [ true ]; do
 	rm /tmp/*xy*.mid
