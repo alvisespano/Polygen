@@ -5,6 +5,8 @@ export key=${keys[$(( $RANDOM % ${#keys[*]} ))]}
 export vers=("" "_" "^")
 export ver=${vers[$(( $RANDOM % ${#vers[*]} ))]}
 
+shopt -s extglob
+
 doit() {
 	cp ./music.grm.tmpl /tmp
 	echo "Init ::= \"X:$RANDOM\nK:$key\n\";" >> /tmp/music.grm.tmpl
@@ -12,7 +14,7 @@ doit() {
 	polygen /tmp/music.grm.tmpl > /tmp/xy.abc
        	abc2midi /tmp/xy.abc -o /tmp/xy.mid -Q $4
 	echo $3 > /tmp/wildmidi.cfg 
-	find $2/ -iname "*$5*pat" | shuf | nl -v 0 >> /tmp/wildmidi.cfg 
+	ls /usr/share/midi/freepats/$2/*$5*pat | shuf | nl -v 0 >> /tmp/wildmidi.cfg 
 	wildmidi -c /tmp/wildmidi.cfg -o `mktemp`.xy.wav /tmp/xy.mid
 }
 
@@ -22,12 +24,12 @@ while [ true ]; do
 	rm /tmp/*xy*.mp3
 	rm /tmp/song.mp3
 
-	doit "Note ::= (\"c\"|\"d\"|\"e\"|\"f\"|\"g\"|\"a\"|\"b\") ^[\"/\"|\"2\"]" "/opt/polygen_examples/Tone_001" "bank 0" 90 ""
-	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^[\"2\"|\"3\"|\"4\"]" "/opt/polygen_examples/Tone_001" "bank 0" 90 ""
-	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^[\"2\"|\"3\"|\"4\"]" "/opt/polygen_examples/Tone_001" "bank 0" 90 "bas"
-	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^(\"2\"|\"3\"|\"4\")" "/opt/polygen_examples/Drum_001" "drumbank 0" 180 ""
-	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^(\"2\"|\"3\"|\"4\")" "/opt/polygen_examples/Drum_001" "drumbank 0" 180 ""
-	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^(\"2\"|\"3\"|\"4\")" "/opt/polygen_examples/Drum_001" "drumbank 0" 180 "kick"
+	doit "Note ::= (\"c\"|\"d\"|\"e\"|\"f\"|\"g\"|\"a\"|\"b\") ^[\"/\"|\"2\"]" "Tone_000" "bank 0" 90 "+(Guitar|Piano|Flute|Harp|Cello|Oboe|String)"
+	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^[\"2\"|\"3\"|\"4\"]" "Tone_000" "bank 0" 90 "+(Guitar|Piano|Flute|Harp|Cello|Oboe|String)"
+	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^[\"2\"|\"3\"|\"4\"]" "Tone_000" "bank 0" 90 "Bass"
+	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^(\"2\"|\"3\"|\"4\")" "Drum_000" "drumbank 0" 180 ""
+	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^(\"2\"|\"3\"|\"4\")" "Drum_000" "drumbank 0" 180 ""
+	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^(\"2\"|\"3\"|\"4\")" "Drum_000" "drumbank 0" 180 "Kick"
 
 	for x in /tmp/*xy.wav;do
 		ffmpeg -stream_loop -1 -t 180s -i $x -filter:a loudnorm $x.mp3
