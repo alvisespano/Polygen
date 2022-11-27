@@ -26,7 +26,7 @@ export keys=(C D E F G A B)
 export key=${keys[$(( $RANDOM % ${#keys[*]} ))]}
 export vers=("" "_" "^")
 export ver=${vers[$(( $RANDOM % ${#vers[*]} ))]}
-export tempo=80 + $(( $RANDOM % 20 ))
+export tempo=$(( 80 + ( $RANDOM % 30 ) ))
 
 	doit "Note ::= (\"c\"|\"d\"|\"e\"|\"f\"|\"g\"|\"a\"|\"b\") ^[\"/\"|\"2\"]" "Tone_000" "bank 0" $tempo $tunes
 	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^[\"2\"|\"3\"|\"4\"]" "Tone_000" "bank 0" $tempo $tunes
