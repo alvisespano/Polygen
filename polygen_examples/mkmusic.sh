@@ -32,10 +32,10 @@ while [ true ]; do
 	doit "Note ::= (\"C\"|\"D\"|\"E\"|\"F\"|\"G\"|\"A\"|\"B\") ^(\"2\"|\"3\"|\"4\")" "Drum_000" "drumbank 0" 180 "Kick"
 
 	for x in /tmp/*xy.wav;do
-		ffmpeg -stream_loop -1 -t 180s -i $x -filter:a loudnorm $x.mp3
+		ffmpeg -t 180s -i $x -filter:a loudnorm $x.mp3
 	done
 
-	inp="`find /tmp -maxdepth 1 -iname "*xy*.mp3" -printf " -stream_loop -1 -t 180s -i \"%h/%f\" "`"
+	inp="`find /tmp -maxdepth 1 -iname "*xy*.mp3" -printf " -t 180s -i \"%h/%f\" "`"
 
 	ffmpeg $inp -filter_complex:a amerge=inputs=`ls /tmp/*xy*.mp3 | wc -l` /tmp/song.mp3
 
