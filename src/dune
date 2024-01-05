@@ -25,6 +25,7 @@
   (flags (-w -27))
   (libraries polygen)
   (modules polygen_js)
+  (js_of_ocaml (flags (:standard --enable effects)))
   (preprocess (pps js_of_ocaml-ppx)))
 
 (install
