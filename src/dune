@@ -1,0 +1,39 @@
+(executable
+  (name polygen)
+  (public_name polygen)
+  (package polygen)
+  (flags (-w -27))
+  (libraries polygen)
+  (modules polygen)
+)
+
+(library
+  (name polygen_lib)
+  (public_name polygen)
+  ;(package polygen)
+  (flags (-w -27))
+  (libraries unix)
+  (modules
+    polygen_lib
+    absyn check env err fake gen io lexer
+    load parser polygen_lib prelude pre ver)
+)
+
+(executable
+  (name polygen_js)
+  (modes js)
+  (flags (-w -27))
+  (libraries polygen)
+  (modules polygen_js)
+  (js_of_ocaml (flags (:standard --enable effects)))
+  (preprocess (pps js_of_ocaml-ppx)))
+
+(install
+  (files (polygen_js.bc.js as polygen.js))
+  (section lib)
+  (package polygen))
+
+(rule
+  (target ver.ml)
+  (deps ver.ml.template DATE VERSION gen_ver.sh)
+  (action (with-stdout-to %{target} (run ./gen_ver.sh))))
